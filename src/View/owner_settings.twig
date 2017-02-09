@@ -1,0 +1,314 @@
+{% extends 'owner_base.twig' %}
+
+{% block page_name %}
+<i class="material-icons">settings</i>&nbsp;{{ 'setting' | trans }}
+{% endblock %}
+
+{% block head_extension %}
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/css/owner_setting.css">
+{% endblock %}
+
+{% block js %}
+
+{% if selected_site %}
+  var site = JSON.parse('{{ selected_site | json_encode() | replace({'\\n':'\\\\n', '\\r':'\\\\r'}) | raw }}');
+  function editSite() {
+    $('#edit_site_id').val(site.id);
+    $('#edit_site_name').val(site.name);
+    $('#edit_site_url').val(site.url);
+    $('#edit_site_dialog').modal('open');
+  }
+
+  function onChangeUseRss() {
+    if ( $('#use_rss_list').val() == "1" ) {
+      $('#feed_url_row').show();
+    } else {
+      $('#feed_url_row').hide();
+    }
+    return true;
+  }
+{% endif %}
+
+
+{% endblock %}
+
+{% block js_ready %}
+
+{% if selected_site %}
+  $('#icon_form').submit(function(e) {
+    e.preventDefault();
+ 
+    var fd = new FormData($(this)[0]);
+    fd.append('site_id', {{ selected_site.id }});
+ 
+    $.ajax('{{ ROOT_PATH }}/owner/site/prepare_icon', {
+      method: "POST",
+      processData: false,
+      contentType: false,
+      data: fd,
+      dataType: 'json',
+      success: function(json) {
+        if ( json.result == 'success' ) {
+          var img = $('<img id="new_icon_image" width="128">').attr('src', '{{ROOT_PATH}}/siteicons/' + json.name );
+          $('#new_icon_image').remove();
+          $('#icon_profile').prepend(img);
+          $('#icon_form').find(':submit').attr('disabled', true);
+          $('#icon_profile').show();
+        } else {
+          if ( json.reason == 'sizeover' ) {
+            alert('{{ 'owner_setting.image_size_too_big' | trans }}');
+          }
+        }
+      },
+      error: function(json) {
+        alert('{{ 'owner_setting.error' | trans }}');
+      }
+    });
+  });
+
+  $('#new_icon_input').change(function(){
+    $('#icon_form').find(':submit').attr('disabled', false);
+  });
+{% endif %}
+
+$('.dropdown-button').dropdown({
+    inDuration: 300,
+    outDuration: 225,
+    constrain_width: true, // Does not change width of dropdown to that of the activator
+    hover: false, // Activate on hover
+    gutter: 0, // Spacing from edge
+    belowOrigin: false // Displays dropdown below the button
+  }
+);
+
+$('#scheduled_at').datetimepicker({step: 15});
+$('#edit_scheduled_at').datetimepicker({step: 15});
+
+{% endblock %}
+
+{% block content %}
+
+{% if selected_site %}
+
+<div id="setup_code_modal" class="modal">
+  <div class="modal-content">
+    <h5>{{ 'button_embedding' | trans }}</h5>
+    <p>
+      {{ 'owner_setting.setup.paste_code' | trans }}
+    </p>
+    <code><pre style="font-size:12px; line-height:1em;">{{ setup_code }}</code></pre>
+    <br/>
+    {{ 'owner_setting.setup.display_example' | trans }}<br/>
+    <div>
+      {% if constant('DEFAULT_LOCALE') == 'ja' %}
+        <img src="{{ ROOT_PATH }}/connect/button1.png" width="60" height="20" />
+      {% else %}
+        <img src="{{ ROOT_PATH }}/connect/button1_en.png" width="100" height="20" />
+      {% endif %}
+    </div>
+    <br/>
+    <h5>{{ 'owner_setting.setup.for_customize' | trans }}</h5>
+    <p>
+      {{ 'owner_setting.setup.for_customize_desc' | trans | raw }}
+    </p>
+    <table class="bordered">
+      <tr>
+        <th>{{ 'owner_setting.setup.attribute' | trans }}</th>
+        <th>{{ 'owner_setting.setup.content' | trans }}</th>
+      </tr>
+      <tr>
+        <td>data-image_src</td>
+        <td>
+          {{ 'owner_setting.setup.image_src' | trans }}
+        </td>
+      </tr>
+      <tr>
+        <td>data-width</td>
+        <td>
+          {{ 'owner_setting.setup.image_width' | trans }}
+        </td>
+      </tr>
+      <tr>
+        <td>data-height</td>
+        <td>
+          {{ 'owner_setting.setup.image_height' | trans }}
+        </td>
+      </tr>
+      <tr>
+        <td>data-back</td>
+        <td>
+          {{ 'owner_setting.setup.data_back' | trans | raw }}
+        </td>
+      </tr>
+      <tr>
+        <td>data-link_target</td>
+        <td>
+          {{ 'owner_setting.setup.data_target' | trans }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div id="direct_embedded_modal" class="modal">
+  <div class="modal-content">
+    <h5>{{ 'direct_embedding' | trans }}</h5>
+    <p>
+      {{ 'owner_setting.direct.description' | trans | raw }}
+    </p>
+    <h6>{{ 'owner_setting.direct.setup' | trans }}</h6>
+    <ol>
+      <li>
+        {{ 'owner_setting.direct.download_zip' | trans }}<br>
+        <a class="btn waves-effect" style="margin:1em;" href="{{ ROOT_PATH }}/owner/direct-embedded-zip?site_id={{ selected_site.id }}">ZIP</a>
+      </li>
+      <li>
+        {{ 'owner_setting.direct.paste_code' | trans }}<br>
+        <code><pre style="font-size:12px; line-height:1em;">&lt;script src="/bpush_loader.js"&gt;&lt;/script&gt;
+&lt;script&gt;bpush_controller.init();&lt;/script&gt;</pre></code>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div id="icon_change_modal" class="modal">
+  <div class="modal-content">
+    <p>
+      {{ 'owner_setting.icon_setup.description' | trans | raw }}
+    </p>
+    <form id="icon_form" class='update'>
+      <input type="file" id="new_icon_input" name="icon" accept="image/jpeg,image/png" required /><br /><br />
+      <button type="submit" class="btn waves-effect waves-light">{{ 'upload' | trans }}</button>
+    </form>
+    <br/>
+    <div id="icon_profile" style="display: none;">
+      <br/><a href="{{ ROOT_PATH }}/owner/site/fix_icon?site_id={{selected_site.id}}" class="btn waves-effect waves-light">{{ 'ok' | trans }}</a>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% include 'infos.inc.twig' %}
+{% include 'errors.inc.twig' %}
+
+  <div class="row">
+    <h5 class="left-align">{{ 'owner_setting.section_setup' | trans }}</h5>
+  </div>
+  <div style="margin-top: 1em; padding-left: 1em;">
+    <div class="row">
+      <div class="col s12">
+        <a href="#setup_code_modal" class="modal-trigger btn waves-effect waves-light"><i class="material-icons left">code</i>{{ 'button_embedding' | trans }}</a>
+        &nbsp;&nbsp;
+        <a href="#direct_embedded_modal" class="modal-trigger btn waves-effect waves-light"><i class="fa fa-wrench"></i>&nbsp;&nbsp;{{ 'direct_embedding' | trans }}</a>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <h5 class="left-align">{{ 'owner_setting.site_information' | trans }}</h5>
+  </div>
+  <div style="margin-top: 1em; padding-left: 1em;">
+    <form action="{{ ROOT_PATH }}/owner/site/post" method="post">
+      <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+      <input type="hidden" id="edit_site_id" name="site_id" value="{{ selected_site.id }}"/>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label>{{ 'owner_setting.icon' | trans }}</label>
+        </div>
+        <div class="input-field col s4">
+          <a class="modal-trigger valign" href="#icon_change_modal">
+            {% if selected_site.icon %}
+              <img src="{{ ROOT_PATH }}/siteicons/{{ selected_site.icon }}" style="max-width:64px;" />
+            {% else %}
+              <i class="valign material-icons teal-text medium">photo</i>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label for="edit_site_name">{{ 'name' | trans }}<span class="red-text">*</span></label>
+        </div>
+        <div class="input-field col s6">
+          <input id="edit_site_name" name="name" type="text" class="validate" placeholder="{{ 'site_name' | trans }}" value="{{ selected_site.name }}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label for="edit_site_url">{{ 'url' | trans }}<span class="red-text">*</span></label>
+        </div>
+        <div class="input-field col s6">
+          <input id="edit_site_url" name="site_url" type="text" class="validatep" placeholder="{{ 'site_url' | trans }}" value="{{ selected_site.url }}" pattern="https?://.+" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label>{{ 'owner_setting.use_notification_list' | trans }}</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="use_list_page" class="">
+            <option value="1" {% if selected_site.use_list_page == "1" %}selected{% endif %}>{{ 'owner_setting.use' | trans }}</option>
+            <option value="0" {% if selected_site.use_list_page == "0" %}selected{% endif %}>{{ 'owner_setting.not_use' | trans }}</option>
+          </select>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col s10 m9 l8 right-align">
+          <button type="submit" role="submit" class="modal-action waves-effect waves-light btn teal">
+          <i class="material-icons left">create</i>{{ 'update' | trans }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <h5 class="left-align">{{ 'owner_setting.rss_coordination' | trans }}</h5>
+  </div>
+  <div style="margin-top: 1em; padding-left: 1em;">
+    <form action="{{ ROOT_PATH }}/owner/update_rss" method="POST">
+      <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label>{{ 'owner_setting.status' | trans }}</label>
+        </div>
+        <div class="input-field col s6">
+          <select id="use_rss_list" name="use_rss" class="" onchange="onChangeUseRss()">
+            <option value="1" {% if selected_site.use_rss == "1" %}selected{% endif %}>{{ 'enable' | trans }}</option>
+            <option value="0" {% if selected_site.use_rss == "0" %}selected{% endif %}>{{ 'disable' | trans }}</option>
+          </select>
+        </div>
+      </div>
+      <div id="feed_url_row" class="row" {% if selected_site.use_rss == 0 %}style="display:none;"{% endif %}>
+        <div class="input-field col s4 m3 l2">
+          <label>{{ 'owner_setting.feed_url' | trans }}</label>
+        </div>
+        <div class="input-field col s6">
+          <input type="text" name="feed_url"
+                {% if rss_info %}value="{{ rss_info.feed_url }}"{% endif %}
+                  pattern="https?://.+">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s10 m9 l8 right-align">
+          <button class="btn" role="submit">
+            <i class="material-icons left">create</i>{{ 'update' | trans }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br/>
+  <div class="row">
+    <h5 class="left-align">{{ 'owner_setting.section_other' | trans }}</h5>
+  </div>
+  <div style="margin-top: 1em; padding-left: 1em;">
+    <a href="{{ROOT_PATH}}/owner/site/delete?site_id={{ selected_site.id }}&ctoken={{CSRF_TOKEN}}"
+       onclick="return confirm('{{ 'are_you_sure_to_delete' | trans }}');"
+       class="btn waves-effect waves-light red lighten-2"><i class="material-icons left">delete</i>{{ 'owner_setting.delete_this_site' | trans }}</a>
+  </div>
+
+<br/>
+{% endblock %}
+

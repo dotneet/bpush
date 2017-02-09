@@ -1,0 +1,38 @@
+"use strict";
+
+var bpush_controller = null;
+(function(){
+
+  var frame_id = 'bpush_loader_frame';
+
+  function bpush_execute_loading() {
+    var iframe = document.createElement('iframe');
+    iframe.setAttribute('id', frame_id);
+    iframe.src = './bpush.html';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+
+  function bpush_controller_object() {
+  }
+
+  bpush_controller_object.prototype.init = function () {
+    if ( typeof(document.readyState) === 'undefined' ) {
+      return;
+    }
+    if ( document.readyState === 'complete' ) {
+      bpush_execute_loading();
+    } else {
+      setTimeout(bpush_loader, 50);
+    }
+  }
+
+  bpush_controller_object.prototype.setVisitorTag = function (tag) {
+      var frame = document.getElementById(frame_id);
+      return frame.contentWindow.setVisitorTag([tag])
+  }
+
+  bpush_controller = new bpush_controller_object();
+})();
+
+

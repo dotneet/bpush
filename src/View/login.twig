@@ -1,0 +1,36 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+  {% include 'infos.inc.twig' %}
+  {% include 'errors.inc.twig' %}
+
+  <div class="row">
+    <div class="card col s12 m6 offset-m3 l6 offset-l3">
+      <form id="login_form" action="{{ROOT_PATH}}/login" method="post">
+        <div class="card-content">
+          <div class="input-field">
+            <input id="mail" class="validate" type="email" name="mail" maxlength="200" required>
+            <label for="mail">{{ 'email' | trans }}</label>
+          </div>
+          <div class="input-field">
+            <input id="password" class="validate" type="password" name="password" maxlength="16" required>
+            <label for="password">{{ 'password' | trans }}</label>
+          </div>
+          <div style="text-align: center; margin-top: 1em;">
+            <button role="submit" class="waves-effect waves-light btn">{{ 'login' | trans }}</button>
+            <br/>
+            <br/>
+            <p class="right-align">
+              {% if constant('USE_REGISTERATION_THROUGH_WEB') %}
+                <a href="https://{{ DOMAIN_NAME }}{{ ROOT_PATH }}/signup" class="small-text" style="margin: 0 10px;">{{ 'new_registeration' | trans }}</a>
+              {% endif %}
+              <a href="{{ROOT_PATH}}/auth/request_password_reset"><span class="small-text">{{ 'forgot_password' | trans }}</span></a>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

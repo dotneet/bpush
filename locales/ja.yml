@@ -1,0 +1,189 @@
+home: "abc"
+login: "ログイン"
+logout: "ログアウト"
+password: "パスワード"
+password_reset: "パスワード再設定"
+reset: "再設定"
+forgot_password: "パスワードを忘れた場合"
+account: "アカウント"
+account_setting: "アカウント設定"
+account_info: "アカウント情報"
+new_registeration: "新規登録"
+email: "メールアドレス"
+registered_sites: "登録しているサイト"
+generate_token: "トークンを生成"
+api_token: "APIトークン"
+contact: "問い合わせ"
+dashboard: "ダッシュボード"
+push_notification: "プッシュ通知"
+notification: '通知'
+notification_list: '通知一覧'
+setting: "設定"
+display_notification_list: "通知リストを表示"
+registered_devices: "登録デバイス数"
+registered_devices_desc: >
+  このサイトの通知を購読しているデバイスの数です。
+total_sent_messages: "全サイト送信数累計"
+count_of_sent_messages: "送信済件数"
+count_of_sent_messages_desc: >
+  今月送信したメッセージの数です。
+create_notification: "プッシュ通知を作成"
+name: "名前"
+site_name: "サイト名"
+url: "URL"
+site_url: "サイトURL"
+close: "閉じる"
+register: "登録"
+update: "更新"
+title: "タイトル"
+content: "内容"
+item_unit: "件"
+button_embedding: "簡単設置"
+direct_embedding: "直接設置"
+notification_status_done: "送信完了"
+notification_status_failed: "送信失敗"
+notification_status_scheduled: "送信予約済"
+notification_status_available: "送信可能"
+unsent: '未送信'
+click: 'クリック'
+click_count: 'クリック数'
+receive: '受信'
+receive_count: '受信数'
+created_datetime: '作成日時'
+link: 'リンク'
+send: '送信'
+delete: '削除'
+edit: '編集'
+upload: 'アップロード'
+select: '選択'
+ok: 'OK'
+are_you_sure_to_send: '送信してよろしいですか？'
+are_you_sure_to_delete: '削除してよろしいですか？'
+enable: "有効"
+disable: "無効"
+registeration_confirmation: '登録確認'
+messages:
+  new_password_is_set: "新しいパスワードを設定しました。"
+  registeration_is_done: "登録が完了しました。"
+  site_information_is_updated: "サイト情報を更新しました。"
+  site_registered: "サイトを登録しました。サイトの設定ページから設置コードを取得してサイトに追加してください。."
+  site_is_deleted: "サイトを削除しました。"
+  start_sending: "送信を開始しました。"
+errors:
+  login_failed: "ログインに失敗しました。"
+  invalid_input: "不正な入力です。"
+  error: 'エラーが発生しました。'
+  operation_is_not_allowed: "この操作は許可されていません。"
+  mail_address_is_incorrect: "正しいメールアドレスを指定してください。"
+  password_is_incorrect: "正しいパスワードを指定してください。"
+  email_is_already_used: "このメールアドレスは既に使われています。"
+  mail_sending_is_failed: "メール送信に失敗しました。"
+  email_is_not_found: "指定したメールアドレスが見つかりません。"
+  leach_to_max_send_messages: "送信数の上限に達したため送信できませんでした。"
+signup:
+  error_password_input: "パスワードは英数字8〜16文字で指定してください。"
+  error_different_password: "パスワードと確認用のパスワードが異なります。"
+  error_uncheck_agreement: "システムの利用規約に同意してください。"
+  title: '新規登録'
+  register: '登録する'
+  password: "パスワード(英数字8~16文字)"
+  password_confirm: "パスワード(確認)"
+  agreement_title: '利用規約・免責事項'
+  agree_text_left: ''
+  agree_text_right: 'に同意します。'
+  agreement: >
+    本システムを利用したことによって、利用者または第三者に損害が生じた場合であっても、一切の責任は負担致しません。
+signup_done:
+  title: "仮登録の完了"
+  message: >
+    仮登録完了のメールを送信しました。<br>
+    メールを確認して登録を完了させてください。
+password_reset:
+  title: "パスワード再設定"
+  password: "パスワード(英数字8~16文字)"
+  password_confirm: "パスワード(確認)"
+  setting: "パスワードを設定"
+  done: >
+    指定のメールアドレスにメールを送信しました。<br>
+    内容を確認し、パスワードを再設定してください。
+owner_notification:
+  link_url: "リンクURL"
+  scheduled_time: "送信時間"
+  content: "内容"
+  image_size_too_big: "100KB以内の画像を指定してください"
+  error: 'エラーが発生しました'
+  error_by_max_send_times: "送信回数上限に達したため送信できませんでした。"
+  error_by_max_send_messages: "メッセージ送信数の上限に達したため送信できませんでした。"
+owner_account:
+  first_step: "まずはサイトを登録しましょう。"
+  register_site: "サイトを登録"
+  your_token_will_be_invalid: "既存のトークンは無効になりますがよろしいですか？"
+owner_setting:
+  site_information: 'サイト情報'
+  icon: "アイコン"
+  site_icon: 'サイトアイコン'
+  use_notification_list: '通知リストの使用'
+  use: '使用する'
+  not_use: '使用しない'
+  rss_coordination: 'RSS連携'
+  feed_url: 'フィードURL'
+  status: '有効状態'
+  section_setup: '設置'
+  section_other: 'その他'
+  error: 'エラーが発生しました'
+  image_size_too_big: "100KB以内の画像を指定してください"
+  delete_this_site: 'サイトを削除'
+  icon_setup:
+    description: >
+      通知に表示されるアイコンを設定できます。<br/>
+      100KB以内のJPEGまたはPNG形式の画像を指定してください。
+  setup:
+    paste_code: >
+      プッシュ通知ボタンを設置したい場所に下記のコードを貼り付けてください。
+    display_example: '表示例'
+    for_customize: 'カスタマイズについて(HTMLを理解している方向け'
+    for_customize_desc: >
+      divタグの属性を設定することでボタンをカスタマイズできます。<br>
+      ユーザーが編集可能な属性は下記の通りです。
+    attribute: "属性"
+    content: "内容"
+    image_src: "imgタグのsrc属性に反映されます"
+    image_width: "imgタグのwidth属性に反映されます"
+    image_height: "imgタグのheight属性に反映されます"
+    data_back: >
+      ユーザーが通知設定後に戻るページのURLとなります。絶対URLで指定します。<br>
+      <span style="color:red">この属性は必須です。</span>
+    data_target: "aタグのtarget属性に反映されます"
+  direct:
+    description: >
+      直接設置を使うと自然な形でプッシュ通知を導入できます。<br/>
+      ボタンの設置が不要となり、通知設定時にページ遷移が発生しません。<br/>
+      直接設置には<span style="color:red;">SSLに対応したサイトが必要です。</span><br/>
+      SSLに対応していない場合や、ルートフォルダにファイルをアップロードできない場合は「簡単設置」を使用してください。<br/>
+    setup: "設置方法"
+    download_zip: >
+      下記のリンクからZIPファイルをダウンロードし、展開したファイルをサイトのルートフォルダに配置してください。
+    paste_code: >
+      下記のコードを通知を設定したいページのHTMLのheadタグ内に挿入してください。
+site_join:
+  title: '%site_name%の通知設定'
+  now_setting: "設定中..."
+  done: 'プッシュ通知を設定しました。'
+  back: '戻る'
+  back_to_site: 'サイトに戻る'
+  error_by_setting: >
+    通知が無効に設定されています。<br>
+    設定画面より通知を有効にしてください。
+  error_by_not_support: >
+    お使いのブラウザーはプッシュ通知に対応していません。<br>
+    プッシュ通知を使うにはChromeブラウザーをご利用ください。
+site_list:
+  title: '%site_name%の通知'
+  notification_off: '通知を解除しました。'
+  notification_off_failed: '通知の解除に失敗しました。'
+  back_to_owner_page: 'オーナーページに戻る'
+  receive_notification: '通知を受け取る'
+  stop_subscription: '通知を解除'
+  history: '履歴'
+  empty: '通知はありません'
+

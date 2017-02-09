@@ -1,0 +1,144 @@
+@import "../../public/bower_components/materialize/sass/components/_color.scss";
+
+body {
+  color: #546e7a;
+  background-color: #eeeeee;
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}
+
+header{
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.owner_container .row .col {
+  padding-left: 0;
+}
+
+.owner_container h2 {
+  font-size: 1.5rem;
+  margin: 0.5em 0 0.5em 0;
+  line-height: 2rem;
+  vertical-align: middle;
+  color: color('blue-grey', 'lighten-1');
+  font-weight: bold;
+}
+
+.page_header h2 i {
+  font-size: 2rem;
+  vertical-align: middle;
+  height: 2rem;
+}
+
+h1 {
+  font-size: 48px;
+  color: #4db6ac;
+  padding: 0;
+  margin: 0;
+}
+
+div,p,ul,ol {
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+@media( min-width: 992px ) {
+  .main {
+    padding-left: 270px;
+  }
+}
+@media( max-width: 991px ) {
+  .main {
+    padding-left: 0.5rem;
+  }
+}
+
+.owner_container {
+  max-width: 90%;
+}
+
+.owner_container i.mdi-navigation-menu {
+  font-size: 2rem;
+}
+
+.side-nav {
+  background-color: color("teal", "lighten-2");
+  z-index: 999;
+}
+
+nav {
+  background-color: transparent;
+}
+.side-nav li {
+  color: white;
+  font-weight: bold;
+}
+.side-nav li a {
+  // font-size: 18px;
+  // vertical-align: middle;
+}
+.side-nav li a > i.material-icons {
+  vertical-align: middle;
+}
+.side-nav li.active {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.content {
+  padding: 0.5em;
+  background: linear-gradient(rgb(214, 227, 231), lightblue);
+}
+
+.header {
+  color: color("blue-grey", "lighten-2");
+  //border-bottom: 1px solid #90a4ae; // blue-gray
+}
+
+.pagination {
+  margin: 0px;
+}
+.pagination li {
+  line-height: 30px;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+span.time {
+  color: color("grey", "lighten-1");
+  font-size: 12px;
+}
+
+strong {
+  font-weight: bold;
+  font-height: 1.3em;
+}
+
+.card .row {
+  margin: 0;
+}
+.card-panel .row {
+  margin: 0;
+}
+
+.toppage .col {
+  padding: 1rem 2rem;
+}
+
+.collapsible-body p {
+  font-size: 16px;
+}
+
+.card[onclick] {
+  cursor: pointer;
+}
+
+pre {
+  padding: 0.5em;
+  background-color: #e0e0e0;
+}
+

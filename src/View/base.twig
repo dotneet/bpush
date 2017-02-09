@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="referrer" content="origin">
+
+  <title>bpush - Push Notification System for Web</title>
+  <meta name="description" content="bpush is a web push notification system.">
+
+  <link rel="manifest" href="{{ ROOT_PATH }}/manifest.json">
+  <link rel="icon" type="image/png" href="{{ ROOT_PATH }}/icon_256.png">
+  <link rel="apple-touch-icon" sizes="256x256" href="/icon_256.png">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/components-font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/css/main.css">
+  
+
+  <script src="{{ ROOT_PATH }}/bower_components/jquery/dist/jquery.min.js" defer></script>
+  <script src="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.js" defer></script>
+  {% block head_extension %}{% endblock %}
+
+  <script>
+    function addLoadListener(listener) {
+      if (window.addEventListener) {
+          window.addEventListener('load', listener);
+      } else if (window.attachEvent) {
+          window.attachEvent('onload', listener);
+      }
+    }
+
+    (function(){
+      function onLoadAll() {
+        if ( typeof(jQuery) === "undefined" ) {
+          setTimeout(onLoadAll, 10);
+        } else {
+          $('.modal').modal();
+          $('select').material_select();
+          $('.tooltipped').tooltip({delay: 50});
+
+          {% block js_ready %}{% endblock %}
+        }
+      }
+      addLoadListener(onLoadAll);
+    })();
+
+    {% block js %}{% endblock %}
+  </script>
+</head>
+
+<body fullbleed layout vertical>
+    {% block header %}
+      <header>
+        <a href="{{ROOT_PATH}}/"><h1 id="logo">bpush</h1></a>
+      </header>
+    {% endblock %}
+  <div class="container">
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+      <br/><br/>
+      <div class="hide-on-med-and-up center-align">
+        <hr/>
+        <p class="center-align" style="margin: 0px; font-size:24px;">
+          <span style="vertical-align:top;">bpush.net</span>&nbsp;&nbsp;
+          <a href="{{ ROOT_PATH }}/"><i class="material-icons small blue-grey-text">home</i></a>&nbsp;&nbsp;
+          <a href="mailto:{{ constant('CONTACT_MAIL') }}"><i class="material-icons small blue-grey-text">email</i></a>
+        </p>
+      </div>
+      {% include 'footer.inc.twig' %}
+    {% endblock %}
+  </div>
+  <script src="{{ ROOT_PATH }}/bower_components/materialize/dist/js/materialize.min.js" defer></script>
+</body>
+
+</html>
+

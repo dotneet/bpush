@@ -1,0 +1,16 @@
+{
+  "name": "bpush",
+  "short_name": "bpush",
+  "icons": [{
+    "src": "icon_256.png",
+    "sizes": "256x256",
+    "type": "image/png"
+  }],
+  "start_url": "{{ ROOT_PATH }}",
+  {% if GOOGLE_PROJECT_NUMBER %}
+  "gcm_sender_id": "{{ GOOGLE_PROJECT_NUMBER }}",
+  "gcm_user_visible_only": true,
+  {% endif %}
+  "display": "standalone"
+}
+

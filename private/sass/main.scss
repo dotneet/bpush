@@ -1,0 +1,116 @@
+@import "../../public/bower_components/materialize/sass/components/_color.scss";
+
+$fgcolor: color('blue-grey', 'darken-1');
+$bgcolor: color('grey', 'lighten-3');
+
+body {
+  color: $fgcolor;
+  background-color: $bgcolor;
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}
+
+header{
+  padding: 0.5rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 48px;
+  color: #4db6ac;
+  padding: 0;
+  margin: 0;
+}
+
+div,p,ul,ol {
+  font-size: 19px;
+  line-height: 1.5em;
+}
+
+.content {
+  padding: 0.5em;
+  background: linear-gradient(rgb(214, 227, 231), lightblue);
+}
+
+.header {
+  color: color("blue-grey", "lighten-2");
+  //border-bottom: 1px solid #90a4ae; // blue-gray
+}
+
+.pagination {
+  margin: 0px;
+}
+.pagination li {
+  line-height: 30px;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+span.time {
+  color: color("grey", "lighten-1");
+  font-size: 12px;
+}
+
+strong {
+  font-weight: bold;
+  font-height: 1.3em;
+}
+
+.card .row {
+  margin: 0;
+}
+.card-panel .row {
+  margin: 0;
+}
+
+.toppage .col {
+  padding: 1rem 2rem;
+}
+
+h4.toppage {
+  position: relative;
+}
+h4.toppage:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  border-bottom: 2px solid color('blue-grey', 'lighten-2');
+  box-sizing: inherit;
+}
+h4.toppage span{
+  position: relative;
+  display: inline-block;
+  background-color: $bgcolor;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+}
+
+.feature .col h5 {
+  font-size: 14pt;
+}
+.feature .col p {
+  font-size: 12pt;
+}
+
+.collapsible-body p {
+  font-size: 16px;
+}
+
+.card[onclick] {
+  cursor: pointer;
+}
+
+pre {
+  padding: 0.5em;
+  background-color: #e0e0e0;
+}
+
+.side-nav li.active {
+  background-color: rgba(255,255,255,0.15);
+}

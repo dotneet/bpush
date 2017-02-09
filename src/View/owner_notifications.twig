@@ -1,0 +1,280 @@
+{% extends 'owner_base.twig' %}
+
+{% block page_name %}<i class="material-icons">notifications</i>{{ 'push_notification' | trans }}{% endblock %}
+
+{% block js %}
+
+var notifications = JSON.parse('{{ notifications | json_encode() | replace({'\\n':'\\\\n', '\\r':'\\\\r'}) | raw }}');
+function editNotification(id) {
+  var n = notifications[id];
+  $('#edit_notification_id').val(n.id);
+  $('#edit_subject').val(n.subject);
+  $('#edit_link_url').val(n.post_url);
+  $('#edit_content').val(n.content);
+  $('#edit_scheduled_at').val(n.scheduled_at);
+  $('#edit_notification_dialog').modal('open');
+}
+
+{% endblock %}
+
+{% block js_ready %}
+
+{% if selected_site %}
+  $('#icon_form').submit(function(e) {
+    e.preventDefault();
+ 
+    var fd = new FormData($(this)[0]);
+    fd.append('site_id', {{ selected_site.id }});
+ 
+    $.ajax('{{ ROOT_PATH }}/owner/site/prepare_icon', {
+      method: "POST",
+      processData: false,
+      contentType: false,
+      data: fd,
+      dataType: 'json',
+      success: function(json) {
+        if ( json.result == 'success' ) {
+          var img = $('<img id="new_icon_image" width="128">').attr('src', '{{ROOT_PATH}}/siteicons/' + json.name );
+          $('#new_icon_image').remove();
+          $('#icon_profile').prepend(img);
+          $('#icon_form').find(':submit').attr('disabled', true);
+          $('#icon_profile').show();
+        } else {
+          if ( json.reason == 'sizeover' ) {
+            alert('{{ 'owner_notification.image_size_too_big' | trans }}');
+          }
+        }
+      },
+      error: function(json) {
+        alert('{{ 'owner_notification.error' | trans }}');
+      }
+    });
+  });
+
+  $('#new_icon_input').change(function(){
+    $('#icon_form').find(':submit').attr('disabled', false);
+  });
+{% endif %}
+
+$('.dropdown-button').dropdown({
+    inDuration: 300,
+    outDuration: 225,
+    constrain_width: true, // Does not change width of dropdown to that of the activator
+    hover: false, // Activate on hover
+    gutter: 0, // Spacing from edge
+    belowOrigin: false // Displays dropdown below the button
+  }
+);
+
+$('#scheduled_at').datetimepicker({step: 15});
+$('#edit_scheduled_at').datetimepicker({step: 15});
+
+{% endblock %}
+
+{% block content %}
+
+{# Notification Dialog #}
+{% if selected_site %}
+<div id="notification_dialog" class="modal">
+  <form action="{{ ROOT_PATH }}/owner/notification/post" method="post" onsubmit="$('#notification_dialog').modal('close'); return true;">
+    <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+    <input type="hidden" name="site_id" value="{{selected_site.id}}">
+    <div class="modal-content">
+      <div class="input-field">
+        <input id="subject" name="subject" type="text" class="validate" required>
+        <label for="subject">{{ 'title' | trans }}<span class="red-text">*</span></label>
+      </div>
+      <div class="input-field">
+        <input id="link_url" name="link_url" type="text" class="validate" pattern="https?://.+" required>
+        <label for="link_url">{{ 'owner_notification.link_url' | trans }} (ex. http://examaple.com/item/1)<span class="red-text">*</span></label>
+      </div>
+      <div class="input-field">
+        <input id="scheduled_at" name="scheduled_at" type="text" class="validate" pattern="\d{4}/\d{1,2}/\d{1,2} \d{1,2}:\d{1,2}">
+        <label for="scheduled_at">{{ 'owner_notification.scheduled_time' | trans }} (ex. 2010/10/10 23:00)</label>
+      </div>
+      <div class="input-field">
+        <textarea id="content" name="content" style="height: 4.5em;" required maxlength="200"></textarea>
+        <label for="content">{{ 'content' | trans }}<span class="red-text">*</span></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" role="button" class="modal-action modal-close waves-effect waves-light btn red lighten-2" style="margin-left: 1em;">
+        <i class="material-icons left">close</i>{{ 'close' | trans }}</button>
+      <button type="submit" role="submit" class="modal-action waves-effect waves-light btn teal lighten-2">
+        <i class="material-icons left">create</i>{{ 'register' | trans }}</button>
+    </div>
+  </form>
+</div>
+{% endif %}
+
+{# Notification Edit Dialog #}
+{% if selected_site %}
+<div id="edit_notification_dialog" class="modal">
+  <form action="{{ ROOT_PATH }}/owner/notification/post" method="post" onsubmit="$('#edit_notification_dialog').closeModal(); return true;">
+    <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+    <input type="hidden" name="site_id" value="{{selected_site.id}}">
+    <input type="hidden" id="edit_notification_id" name="notification_id" value="">
+    <div class="modal-content">
+      <div class="input-field">
+        <input id="edit_subject" name="subject" type="text" class="validate" placeholder="{{ 'title' | trans }}" required>
+        <label for="edit_subject">{{ 'title' | trans }}<span class="red-text">*</span></label>
+      </div>
+      <div class="input-field">
+        <input id="edit_link_url" name="link_url" type="text" class="validate" placeholder="{{ 'owner_notification.link_url' | trans }}" pattern="https?://.+" required>
+        <label for="edit_link_url">{{ 'owner_notification.link_url' | trans }} (ex. http://examaple.com/item/1)<span class="red-text">*</span></label>
+      </div>
+      <div class="input-field">
+        <input id="edit_scheduled_at" name="scheduled_at" type="text" class="validate" placeholder="{{ 'now' | date('%Y-%m-%d H:i') }}" pattern="\d{4}/\d{1,2}/\d{1,2}\s+\d{1,2}:\d{1,2}">
+        <label for="edit_scheduled_at">{{ 'owner_notification.scheduled_time' | trans }} (ex. 2010/10/10 23:00)</label>
+      </div>
+      <div class="input-field">
+        <textarea id="edit_content" name="content" style="height: 4.5em;" placeholder="{{ 'content' | trans }}" maxlength="200" required></textarea>
+        <label for="edit_content">{{ 'content' | trans }}<span class="red-text">*</span></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" role="button" class="modal-action modal-close waves-effect waves-light btn red lighten-2" style="margin-left: 1em;">
+        <i class="material-icons left">close</i>{{ 'close' | trans }}</button>
+      <button type="submit" role="submit" class="modal-action waves-effect waves-light btn teal lighten-2">
+        <i class="material-icons left">create</i>{{ 'update' | trans }}</button>
+    </div>
+  </form>
+</div>
+{% endif %}
+
+{% include 'infos.inc.twig' %}
+{% include 'errors.inc.twig' %}
+
+<div class="row">
+  <div class="col s12">
+    <a class="btn waves-effect modal-trigger" href="#notification_dialog">
+      <i class="material-icons left">add_alert</i>{{ 'create_notification' | trans }}
+    </a>
+  </div>
+</div>
+
+{% if sites|length > 0 %}
+<div class="row">
+  <div class="col s3 center-align">
+    {{ 'registered_devices' | trans }}<br/>
+    {{ target_count | number_format }}
+  </div>
+  <div class="col s3 center-align">
+    {{ 'count_of_sent_messages' | trans }}<br/>
+    {{ amount_of_sent_messages | number_format }}
+  </div>
+  <div class="col s3 center-align">
+    {{ 'total_sent_messages' | trans }}<br/>
+    {{ total_amount_of_sent_messages | number_format }}
+  </div>
+</div>
+{% endif %}
+
+{% if (notifications | length) > 0 %}
+
+<ul class="collapsible collection with-header" data-collapsible="accordion">
+  <li class="collection-header">
+    <div class="row">
+      <div class="col s12 valign-wrapper">
+        <span class="small-text">{{ notification_count }}{{ 'item_unit' | trans }}</span>
+        <ul class="pagination valign-wrapper">
+          {% if page == 0 %}
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+          {% else %}
+            <li class="waves-effect"><a href="?site_id={{selected_site.id}}&page={{page-1}}"><i class="material-icons">chevron_left</i></a></li>
+          {% endif %}
+
+          {% for i in range(0, ((notification_count/10) | round(0,'floor'))) %}
+            {% if i == page %}
+              <li class="active"><a class="valign" href="?site_id={{selected_site.id}}&page={{i}}">{{ i + 1 }}</a></li>
+            {% else %}
+              <li class="waves-effect"><a class="valign"href="?site_id={{selected_site.id}}&page={{i}}">{{ i + 1 }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if page < ( (notification_count / 10) | round(0,'floor') ) %}
+            <li class="waves-effect"><a href="?site_id={{selected_site.id}}&page={{page+1}}"><i class="material-icons">chevron_right</i></a></li>
+          {% else %}
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+          {% endif %}
+        </ul>
+        <br/>
+      </div>
+    </div>
+  </li>
+  {% for notification in notifications %}
+    <li>
+      <div class="collapsible-header">
+        {% if notification.sent_at %}
+          <i class="small material-icons teal-text tooltipped" data-position="top" data-tooltip="{{ 'notification_status_done' | trans }}">done</i>
+        {% elseif notification.failure_reason == 1 %}
+          <i class="small material-icons red-text tooltipped" data-position="top" data-tooltip="{{ 'notification_status_failed' | trans }}">error</i>
+        {% elseif notification.scheduled_at %}
+          <i class="small material-icons orange-text tooltipped" data-position="top" data-tooltip="{{ 'notification_status_scheduled' | trans }}">timer</i>
+        {% else %}
+          <i class="small material-icons blue-text tooltipped" data-position="top" data-tooltip="{{ 'notification_status_available' | trans }}">thumb_up</i>
+        {% endif %}
+        {{ notification.subject }}&nbsp;&nbsp;
+
+        {# status #}
+        <span style="font-size: 12px">
+          {% if notification.sent_at %}
+            {{ notification.sent_at | date('Y/m/d H:i')}} {{ 'notification_status_done' | trans }}
+          {% elseif notification.scheduled_at %}
+            {{ notification.scheduled_at | date('Y/m/d H:i')}} {{ 'notification_status_scheduled' | trans }}
+          {% else %}
+            {{ 'unsent' | trans }}
+          {% endif %}
+
+          {# receive or click count #}
+          {% if notification.received_count > 0 %}
+            &nbsp;&nbsp;{{ 'receive' | trans }}: {{ notification.received_count }}
+            {% if notification.jump_count > 0 %}
+              &nbsp;&nbsp;{{ 'click' | trans }}: {{ notification.jump_count }}
+            {% endif %}
+          {% endif %}
+        </span>
+        <i class="fa fa-chevron-right right grey-text"></i>
+      </div>
+      <div class="collapsible-body">
+        <p>
+          {% if (not notification.sent_at) and notification.failure_reason != 0 %}
+            <span style="red-text">
+              {% if notification.failure_reason == 1 %}
+                {{ 'owner_notification.error_by_max_send_times' | trans }}
+              {% elseif notification.failure_reason == 2 %}
+                {{ 'owner_notification.error_by_max_send_messages' | trans }}
+              {% endif %}
+            </span>
+          {% endif %}
+          <span style="font-size: 12px">
+            {{ 'created_datetime' | trans }}: {{ notification.created }}<br/>
+            {{ 'link' | trans }}: {{ notification.post_url }}<br/>
+            {% if notification.sent_at %}{{ 'receive_count' | trans }}: {{ notification.received_count }}<br/>{% endif %}
+          </span>
+          <br/>
+          {{ notification.content }}
+        </p>
+          <form action="{{ ROOT_PATH }}/owner/notification/send" method="POST">
+            <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+            <input type="hidden" name="notification_id" value="{{notification.id}}" />
+            <div class="right-align" style="padding-right:2rem; padding-bottom:2rem;">
+              {% if notification.canEdit %}
+                <a class="waves-effect btn" 
+                   href="{{ ROOT_PATH }}/owner/notification/send?notification_id={{ notification.id}}&ctoken={{CSRF_TOKEN}}"
+                   onclick="return confirm('{{ 'are_you_sure_to_send' | trans }}');"><i class="material-icons left">send</i>{{ 'send' | trans }}</a>
+                <a class="waves-effect btn" onclick="editNotification({{ notification.id }});"
+                   href="javascript:void(0);"><i class="material-icons left">edit</i>{{ 'edit' | trans }}</a>
+              {% endif %}
+              <a class="waves-effect btn red lighten-2" 
+                 href="{{ ROOT_PATH }}/owner/notification/delete?notification_id={{ notification.id}}&ctoken={{CSRF_TOKEN}}"
+                 onclick="return confirm('{{ 'are_you_sure_to_delete' | trans }}');"><i class="material-icons left">delete</i>{{ 'delete' | trans }}</a>
+            </div>
+          </form>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}
+<br/>
+{% endblock %}
+

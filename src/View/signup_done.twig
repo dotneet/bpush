@@ -1,0 +1,15 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <div class="row">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title teal-text">{{ 'signup_done.title' | trans }}</spN>
+          <p>
+            {{ 'signup_done.message' | trans | raw }}
+          </p>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

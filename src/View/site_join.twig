@@ -1,0 +1,106 @@
+{% extends 'visitor_base.twig' %}
+
+{% block head_extension %}
+  <script src="{{ ROOT_PATH }}/js/swlib.js" defer></script>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+
+<div class="row center-align">
+  <div class="col s12">
+    <h5>{{ 'site_join.title' | trans({'%site_name%':site.name}) }}</h5>
+    <div id="msg_progress" style="display: inline-block;">
+      <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      {{ 'site_join.now_setting' | trans }}
+    </div>
+
+    <p id="message" class="small">
+      <span id="msg_done" class="small" style="display:none;"><i class="material-icons teal-text">done</i>{{ 'site_join.done' | trans }}</span>
+      <span id="msg_error_denied" style="display:none;">
+        {{ 'site_join.error_by_setting' | trans | raw }}
+      </span>
+      <span id="msg_error" style="display:none;">
+        {{ 'site_join.error_by_not_support' | trans | raw }}
+      </span>
+    </p>
+
+    {% if back %}
+      <a class="waves-effect waves-ligh btn" href="{{ back }}"><i class="material-icons left">arrow_back</i>{{ 'site_join.back' | trans }}</a>
+    {% else %}
+      <a class="waves-effect waves-ligh btn" href="{{ site.url }}"><i class="material-icons left">arrow_back</i>{{ 'site_join.back_to_site' | trans }}</a>
+    {% endif %}
+    <br/>
+    <br/>
+    <a class="waves-effect waves-ligh btn" href="{{ ROOT_PATH }}/site/{{ site.id }}/list"><i class="material-icons left">notifications</i>{{ 'notification_list' | trans }}</a>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js_ready %}
+
+  $('.modal-trigger').modal();
+  $('select').material_select();
+
+{% endblock %}
+
+{% block js %}
+
+{% include 'embedded/global.js.twig' with {'simple_embedded':true, 'vapid_public_key': vapid_public_key} %}
+(function() {
+  function onLoadSwlib() {
+    if ( typeof(isSupportPushNotification) === "undefined" ) {
+      setTimeout(onLoadSwlib, 10);
+      return;
+    }
+    // If process will not be finished after 10 seconds, reload this page.
+    // Ocassionaly process is hang by an unknown problem.
+    var timer = setTimeout(function(){ location.reload(); }, 10000);
+    var push_setting_success = function() {
+      $('#msg_done').show();
+      $('#msg_progress').hide();
+      {% if back and autoback %}
+        location.href = '{{ back }}';
+      {% endif %}
+      clearTimeout(timer);
+    };
+    var push_setting_failed = function(msgid) {
+      $(msgid).show();
+      $('#msg_progress').hide();
+      clearTimeout(timer);
+    };
+
+    // IE doesn't support Promise
+    if ( !isSupportPushNotification() ) {
+      push_setting_failed('#msg_error');
+      return;
+    }
+
+    enablePushNotification().then(function(){
+      push_setting_success();
+    }).catch(function(){
+      if ( isNotificationDeniedExplicit() ) {
+        push_setting_failed('#msg_error_denied');
+      } else {
+        push_setting_failed('#msg_error');
+      }
+    });
+  }
+  onLoadSwlib();
+})();
+
+{% endblock %}
+

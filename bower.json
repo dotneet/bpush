@@ -1,0 +1,25 @@
+{
+  "name": "bpush",
+  "version": "0.0.1",
+  "description": "Web Push Notification System.",
+  "authors": [
+    "dotneet@gmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "https://bpush.net/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=3.1.1",
+    "datetimepicker": "2.4.3",
+    "materialize": "0.98.0",
+    "components-font-awesome": "4.7.0",
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip"
+  }
+}
+

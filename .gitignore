@@ -1,0 +1,11 @@
+vendor
+logs
+public/manifest.json
+public/connect/button.js
+public/bower_components
+public/siteicons
+config.php
+.sass-cache
+cache/
+node_modules/
+vapid_keys.php

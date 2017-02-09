@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+    
+    RewriteEngine On
+    RewriteBase /~shinji/bpush/public/
+    RewriteCond %{REQUEST_URI} !.*\.(css|jpg|png|gif|ico|xml|zip|js)
+    RewriteCond %{REQUEST_FILENAME} !-f 
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+

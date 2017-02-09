@@ -1,0 +1,37 @@
+(function(){
+var button = document.getElementById('bpush_button');
+var a = document.createElement('a');
+var url = '//{{ DOMAIN_NAME }}{{ ROOT_PATH }}/site/' + button.dataset.site + '/join?back=' + encodeURI(button.dataset.back);
+if ( navigator.userAgent.indexOf('Android') > 0 ) {
+  var url2 = 'intent:' + url + '#Intent;scheme=https;package=com.android.chrome;end';
+  a.setAttribute('href', url2);
+} else {
+  a.setAttribute('href', 'https:' + url);
+}
+if ( button.dataset.link_target !== undefined ) {
+  a.setAttribute('target', button.dataset.link_target);
+}
+var img = document.createElement('img');
+if ( button.dataset.image_src !== undefined ) {
+  img.setAttribute('src', button.dataset.image_src);
+} else {
+  {% if constant('DEFAULT_LOCALE') == 'ja' %}
+    img.setAttribute('src', 'https://{{ DOMAIN_NAME}}{{ ROOT_PATH }}/connect/button1.png');
+    img.setAttribute('width', "60");
+    img.setAttribute('height', "20");
+  {% else %}
+    img.setAttribute('src', 'https://{{ DOMAIN_NAME}}{{ ROOT_PATH }}/connect/button1_en.png');
+    img.setAttribute('width', "100");
+    img.setAttribute('height', "20");
+  {% endif %}
+}
+if ( button.dataset.width !== undefined ) {
+  img.setAttribute('width', button.dataset.width);
+}
+if ( button.dataset.height !== undefined ) {
+  img.setAttribute('height', button.dataset.height);
+}
+a.appendChild(img);
+button.appendChild(a);
+})();
+

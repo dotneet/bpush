@@ -1,0 +1,123 @@
+{% extends 'visitor_base.twig' %}
+
+{% block head_extension %}
+  <script src="{{ ROOT_PATH }}/js/swlib.js" defer></script>
+{% endblock %}
+
+{% block js %}
+function refreshRegisterButtons() {
+  if ( isServiceWorkerEnabled() ) {
+    $('#registerButton').hide();
+    $('#unregisterButton').show();
+  } else {
+    $('#registerButton').show();
+    $('#unregisterButton').hide();
+  }
+}
+
+function unregister() {
+  unregisterServiceWorker().then(function(res){
+     Materialize.toast('{{ 'site_list.notification_off' | trans }}', 3000, 'rounded');
+     location.href = '?unregistered=1';
+  }).catch(function(){
+     Materialize.toast('{{ 'site_list.notification_off_failed' | trans }}', 3000, 'rounded');
+     refreshRegisterButtons();
+  });
+}
+{% endblock %}
+
+{% block js_ready %}
+$(document).ready(function(){
+  $('.modal-trigger').modal();
+  $('select').material_select();
+
+  refreshRegisterButtons();
+
+  {% if unregistered %}
+     Materialize.toast('{{ 'site_list.notification_off' | trans }}', 5000, 'rounded');
+  {% endif %}
+});
+{% endblock %}
+
+{% block content %}
+
+<h5>
+  {{ 'site_list.title' | trans({'%site_name%':site.name}) }}
+  <a href="{{ site.url }}" class="btn-floating btn-small waves-effect waves-light"><i class="material-icons">forward</i></a>
+</h5>
+
+{% if login_owner %}
+<div class="row">
+  <div class="col s12">
+    <a href="{{ ROOT_PATH }}/owner/" class="btn waves-effect waves-light">{{ 'site_list.back_to_owner_page' | trans }}</a>
+  </div>
+</div>
+{% endif %}
+
+<a id="registerButton" class="waves-effect waves-ligh btn" style="display:none;"
+  href="{{ ROOT_PATH }}/site/{{ site.id }}/join?autoback=1&back={{ (ROOT_PATH ~ '/site/' ~ site.id ~ '/list') | url_encode}}">
+  <i class="material-icons left">notifications</i>{{ 'site_list.receive_notification' | trans }}</a>
+
+<div class="row">
+{% if (notifications | length) == 0 %}
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+       <span class="card-title black-text">
+        {{ 'site_list.empty' | trans }}
+       </span>
+      </div>
+    </div>
+  </div>
+{% else %}
+  {% for notification in (notifications | slice(0,3)) %}
+    <div class="col s12 m6 l4">
+      <div class="card" onclick="location.href='{{ notification.post_url }}'">
+        <div class="card-content">
+          <span class="card-title black-text">
+            {{ notification.subject }}
+          </span>
+          <p>{{ notification.content }}<br/><span class="time">{{ notification.sent_at }}</span></p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}
+</div>
+
+{% if (notifications | length) > 0 %}
+  <ul class="collection collapsible with-header" data-collapsible="accordion">
+    <li class="collection-header">
+      <h5 class="header valign-wrapper"><i class="material-icons small">history</i>{{ 'site_list.history' | trans }}</h5>
+    </li>
+    {% for notification in (notifications | slice(3)) %}
+      <li class="">
+        <div class="collapsible-header truncate" style="height: 4rem; line-height: 1.5rem; padding-top:0.5rem;">
+          {{ notification.subject }}<br/>
+          <span class="time">{{ notification.sent_at | date('Y/m/d H:i') }}</span>
+        </div>
+        <div class="collapsible-body">
+          <p>
+            {{ notification.content }}<br/>
+            <br/>
+            <a href="{{ notification.post_url }}" class="btn waves-effect waves-light">LINK</a>
+          </p>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<br/>
+<br/>
+<div class="row">
+  <div class="col s12">
+    <a id="unregisterButton" style="display:none;" 
+       class="waves-effect waves-ligh btn"
+       href="#!" onclick="unregister();">
+      <i class="material-icons left">remove_circle_outline</i>{{ 'site_list.stop_subscription' | trans }}
+    </a>
+  </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="manifest" href="./bpush_manifest.json" />
+    <script src="./bpush_swlib.js"></script>
+    <script language="javascript">
+    //<!--
+    {% include 'embedded/global.js.twig' with {'vapid_public_key': vapid_public_key} %}
+    function bpush_init() {
+      if ( isSupportPushNotification() ) {
+        enablePushNotification();
+      }
+    }
+
+    if ( window.addEventListener ) {
+      window.addEventListener('load', bpush_init);
+    } else {
+      document.attachEvent('onload', bpush_init)
+    }
+    //-->
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

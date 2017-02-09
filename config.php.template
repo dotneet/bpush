@@ -1,0 +1,104 @@
+<?php
+
+// PRODUCTION: debug mode is off. DEVELOPMENT: debug mode is on.
+define('BPUSH_ENVIRONMENT', 'PRODUCTION');
+
+// Use VAPID Protocol. (Firefox support)
+define('USE_VAPID_PROTOCOL', true);
+
+// Your domain name hosted on https. ex. example.com
+define('DOMAIN_NAME', 'example.com');
+// If you host this service in a subdirectory set a path.
+define('ROOT_PATH', '/');
+// administrator's mail address.
+define('CONTACT_MAIL', 'admin@example.com');
+
+// settings for administrator page.
+define('ADMIN_USER', 'adminadmin');
+define('ADMIN_PASSWORD', 'adminadmin');
+
+
+/*
+ * AWS API Key Setting(Not VAPID mode only)
+ */
+// Following access-key must be permited to use SNS API.
+define('AWS_ACCESS_KEY', '');
+define('AWS_SECRET_ACCESS_KEY', '');
+define('AWS_REGION', ''); // ex. us-east-1
+define('AWS_SNS_GCM_ARN', '');
+
+
+/*
+ * Google Setting(Not VAPID mode only)
+ */
+
+// Google Project Number. You can find it in dashboard of Google Cloud Platform Console.
+define('GOOGLE_PROJECT_NUMBER', '');
+// Google API Key
+define('GOOGLE_API_KEY', '');
+
+
+/*
+ * Database Setting
+ */
+
+// MySQL Setting
+define('MYSQL_HOST', 'localhost');
+define('MYSQL_DB', '');
+define('MYSQL_USER', '');
+define('MYSQL_PASS', '');
+
+// Redis Setting
+define('REDIS_HOST', 'localhost');
+define('REDIS_PORT', 6379);
+define('REDIS_PREFIX', '');
+
+
+/**
+ * Registration Setting.
+ */
+// turn on if you want to allow another user to register this system through website.
+// NOTE: you can use scripts/add_user.php for adding user.
+define('USE_REGISTERATION_THROUGH_WEB', false);
+
+
+/*
+ * Mail Server Setting.
+ *
+ * If you set USE_REGISTERATION_THROUGH_WEB to false, following properties is ignored.
+ */
+
+// 'smtp' or 'ses'
+// 'ses' means AWS SES. 
+define('MAIL_SENDING_METHOD', 'smtp');
+
+define('SMTP_MAIL_HOST', '');
+define('SMTP_MAIL_PORT', 587);
+define('SMTP_MAIL_USER', '');
+define('SMTP_MAIL_PASS', '');
+
+define('NOREPLY_MAIL_ADDRESS', 'noreply@example.com');
+
+// if you set MAIL_SENDING_METHOD to 'ses', following property is used when use SES.
+define('AWS_SES_REGION', ''); // ex. us-east-1
+
+
+/*
+ * Limitation of the application.
+ */
+
+// if the flag is true owner cannot send notifications over 50,000.
+define('ENABLE_LIMIT_OF_NOTIFICATION_AMOUNT', false);
+
+// maximum number of sites per owner.
+define('MAX_SITES_PER_OWNER', 10);
+
+/**
+ * Application Deplyment Setting.
+ * (Normally, do not edit following items)
+ */
+define('DEFAULT_LOCALE', 'en');
+define('PROJECT_ROOT', __DIR__);
+define('PUBLIC_ROOT', __DIR__ . '/public');
+define('TWIG_CACHE', __DIR__ . '/cache');
+

@@ -1,0 +1,26 @@
+{% extends 'admin/base.twig' %}
+
+{% block content %}
+
+<div class="card-panel">
+  <h5>Dashboard</h5>
+  <div class="row">
+    <div class="col s2">Owner Count</div>
+    <div class="col s2">{{ owner_count }}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Site Count</div>
+    <div class="col s2">{{ site_count }}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Notification Count</div>
+    <div class="col s2">{{ notification_count }}</div>
+  </div>
+  <div class="row">
+    <div class="col s2">Registered Device Count</div>
+    <div class="col s2">{{ subscription_count }}</div>
+  </div>
+</div>
+
+{% endblock %}
+

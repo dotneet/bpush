@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="referrer" content="origin">
+
+  <title>bpush - API Document</title>
+
+  <link rel="icon" type="image/png" href="./icon_256.png">
+  <link rel="apple-touch-icon" sizes="256x256" href="/icon_256.png">
+  
+  <link rel="stylesheet" href="./bower_components/materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="./bower_components/datetimepicker/jquery.datetimepicker.css">
+
+  <script src="./bower_components/jquery/dist/jquery.min.js" defer></script>
+  <script src="./bower_components/datetimepicker/jquery.datetimepicker.js" defer></script>
+  <script>
+    function addLoadListener(listener) {
+      if (window.addEventListener) {
+          window.addEventListener('load', listener);
+      } else if (window.attachEvent) {
+          window.attachEvent('onload', listener);
+      }
+    }
+
+    addLoadListener(function() {
+      $('.modal-trigger').leanModal();
+      $('select').material_select();
+      $('.tooltipped').tooltip({delay: 50});
+
+    });
+    function showSection(id) {
+      $('section').hide(0,function(){
+        $('#' + id).show(0);
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <header>
+  </header>
+
+  <ul class="side-nav fixed" style="width: 240px;">
+    <li class="bold">
+      <a href="#!" onclick='showSection("abstract")'>概要</a>
+    </li>
+    <li class="bold">
+      <a href="#!" onclick='showSection("authentication")'>認証</a>
+    </li>
+    <li class="bold">
+      <a href="#!" onclick="showSection('format')">リクエスト/レスポンス</a>
+    </li>
+    <li class="bold no-padding">
+    <ul class="collapsible collapsible-accordion">
+        <li class="bold">  
+          <a class="collapsible-header waves-effect" href="#!">API</a>
+          <div class="collapsible-body">
+            <ul>
+              <li>
+                <a href="#!" onclick="showSection('api_send')">send</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="container">
+    <section iv id="abstract">  
+    <h4>概要</h4>
+    <p>
+      bpushと他サービスを連携するためのAPIのドキュメントです。<br/>
+      サイトオーナー様が通知の送信やそれに必要な情報を取得できるAPIを用意する予定です。<br/>
+      現在は即座に通知を送信するsend APIだけ提供しています。
+    </p>
+    </section>
+
+    <section iv id="authentication">  
+    <h4>認証</h4>
+    <p>
+      認証には<strong>APIトークン</strong>が必要です。<br/>
+      APIトークンはオーナーページのメニュー「API発行」より発行することができます<br/>
+      HTTPリクエストを送る際に X-BPUSH-TOKEN というヘッダを追加し、APIトークンを設定することで認証できます。<br/>
+    </p>
+    </section>
+
+    <section id="format">
+      <h4>リクエスト/レスポンス</h4>
+      <p>
+        リクエストとレスポンスはJSON形式のテキストとなります。<br/>
+      </p>
+
+      <h6>リクエスト例(/oapi/v1/send)</h6>
+      <code><pre>
+      {"site_id": 1, "link_url": "https://bpush.net/", "subject": "テスト", "body": "本文"}
+      </pre></code>
+
+      <h6>レスポンス例</h6>
+      <code><pre>
+      {"status": "success", "message": "request was accepeted."}
+      </pre></code>
+
+      <h6>curlによる実行例</h6>
+      <code><pre>
+      curl -X POST -H "X-BPUSH-TOKEN: APIトークン" "https://bpush.net/oapi/v1/send" -d "{\"site_id\": 1, \"link_url\": \"https://bpush.net/\", \"subject\":\"本文\", \"body\": \"内容\"}"
+      &gt;{"message":"request was accepted"}
+      </pre></code>
+
+      <h5>HTTPステータス</h5>
+      <p>
+        リクエストの結果によって下記のHTTPステータスが返ります。<br/>
+        <table style="width:600px;">
+          <tr>
+            <th>ケース</th><th>HTTPステータス</th>
+          </tr>
+          <tr>
+            <td>リクエストが成功した場合</td><td>200</td>
+          </tr>
+          <tr>
+            <td>認証が失敗した場合</td><td>401</td>
+          </tr>
+          <tr>
+            <td>メッセージの形式に誤りがある場合</td><td>400</td>
+          </tr>
+        </table>
+      </p>
+    </section>
+
+    <section id="api_send">
+      <h4 id="api_send">API: send</h4>
+      Method: POST<br/>
+      Endpoint URL: https://bpush.net/oapi/v1/send<br/>
+      <h5>説明</h5>
+      <p>
+        通知の送信を行います。オーナーページから通知を作成して「送信」をクリックした場合と同じ動作になります。
+      </p>
+      <h5>リクエストパラメータ</h5>
+      <p>
+        <table>
+          <tr>
+            <th width="200">フィールド名</th><th>内容</th>
+          </tr>
+          <tr>
+            <td>site_id</td><td>送信対象のサイトID</td>
+          </tr>
+          <tr>
+            <td>link_url</td><td>リンク先URL</td>
+          </tr>
+          <tr>
+            <td>subject</td><td>題名</td>
+          </tr>
+          <tr>
+            <td>body</td><td>内容</td>
+          </tr>
+        </table>
+      </p>
+      <h5>レスポンスパラメータ</h5>
+      <p>
+        <table>
+          <tr>
+            <th width="200">フィールド名</th><th>内容</th>
+          </tr>
+          <tr>
+            <td>status</td>
+            <td>
+              "success":
+              送信を開始した場合<br/>
+              "failed":
+              送信を開始できなかった場合。送信上限に達している場合には"failed"になります。
+            </td>
+          </tr>
+          <tr>
+            <td>message</td><td>実行結果に関するメッセージが設定されます</td>
+          </tr>
+        </table>
+      </p>
+    </section>
+
+    </div>
+
+    <script src="./bower_components/materialize/dist/js/materialize.min.js" defer></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-62308435-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,81 @@
+{% extends 'base.twig' %}
+
+{% block js %}
+  function checkForm() {
+    var pass = $('#password').val();
+    var pass_conf = $('#password_confirm').val();
+    var pass_re = /^[a-zA-Z0-9_\-@%]{8,16}$/;
+    if ( !pass_re.test(pass) ) {
+      alert('{{ 'signup.error_password_input' | trans }}');
+      return false;
+    }
+    if ( pass != pass_conf ) {
+      alert('{{ 'signup.error_different_passowrd' | trans }}');
+      console.log(pass);
+      console.log(pass_conf);
+      return false;
+    }
+
+    if ( !$('#agreement_check').prop('checked') ) {
+      alert('{{ 'signup.error_unset_agreement_checkbox' | trans }}');
+      return false;
+    }
+    return true;
+  }
+{% endblock %}
+
+{% block content %}
+
+<div id="agreement_modal" class="modal">
+  <div class="modal-content">
+    <h5>{{ 'signup.agreement_title' | trans }}</h5>
+    <p>
+      {{ 'signup.agreement' | trans }}
+    </p>
+    <p class="center-align">
+      <a href="#!" onclick="$('#agreement_modal').modal('close');">Close</a>
+    </p>
+  </div>
+</div>
+
+
+  {% include 'infos.inc.twig' %}
+  {% include 'errors.inc.twig' %}
+
+    <div class="row">
+      <div class="col s12 offset-m2 m8 offset-l3 l6">
+        <div class="card">
+          <form id="signup_form" class="form-horizontal" action="signup" method="post" onsubmit="return checkForm();">
+            <div class="card-content">
+              <span class="card-title teal-text" style="margin-bottom:0;">{{ 'signup.title' | trans }}</span>
+              <div class="input-field">
+                <input id="mail" class="validate" type="email" name="mail" maxlength="200" {% if mail is defined %}value="{{ mail }}"{% endif %} required>
+                <label for="mail">{{ 'email' | trans }}</label>
+              </div>
+              <div class="input-field">
+                <input class="form-control" type="password" name="password" id="password" width="20" maxlength="16" required pattern="[a-zA-Z0-9_-@%]{8,16}">
+                <label for="password" class="control-label col-md-4">{{ 'signup.password' | trans }}</label>
+              </div>
+              <div class="input-field">
+                <input class="form-control" type="password" name="password_confirm" id="password_confirm" width="20" maxlength="16" requried pattern="[a-zA-Z0-9_-@%]{8,16}">
+                <label for="pass_confirm" class="control-label col-md-4">{{ 'signup.password_confirm' | trans }}</label>
+              </div>
+              <div class="input-field center-align">
+                <input type="checkbox" class="filled-in" id="agreement_check" />
+                <label for="agreement_check">
+                  {{ 'signup.agree_text_left' | trans }}
+                  <a class="modal-trigger" data-target="agreement_modal" href="#agreement_modal">{{ 'signup.agreement_title' | trans }}</a>
+                  {{ 'signup.agree_text_right' | trans }}
+                </label>
+              </div>
+              <div class="input-field center-align">
+                <br/>
+                <button role="submit" class="waves-effect waves-light btn">{{ 'signup.register' | trans }}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

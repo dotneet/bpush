@@ -1,0 +1,12 @@
+<div id="bpush_button" style="display: inline-block;" 
+     data-site="{{ site.id }}" data-back="{{ site.url }}"
+     ></div>
+<script>
+(function(d,s,ns){
+  var ns = d.createElement(s);
+  ns.async=1;ns.src="//{{ DOMAIN_NAME }}{{ROOT_PATH}}/connect/button.js";
+  var s0=d.getElementsByTagName(s)[0];
+  s0.parentNode.insertBefore(ns, s0);
+})(document,'script');
+</script>
+

@@ -1,0 +1,87 @@
+{% extends 'owner_base.twig' %}
+
+{% block page_name %}
+<i class="material-icons">dashboard</i>&nbsp;{{ 'dashboard' | trans }}
+{% endblock %}
+
+{% block js %}
+
+{% if selected_site %}
+  var site = JSON.parse('{{ selected_site | json_encode() | replace({'\\n':'\\\\n', '\\r':'\\\\r'}) | raw }}');
+  function editSite() {
+    $('#edit_site_id').val(site.id);
+    $('#edit_site_name').val(site.name);
+    $('#edit_site_url').val(site.url);
+  }
+{% endif %}
+
+
+{% endblock %}
+
+{% block js_ready %}
+
+$('#scheduled_at').datetimepicker({step: 15});
+$('#edit_scheduled_at').datetimepicker({step: 15});
+
+{% endblock %}
+
+{% block content %}
+
+{% if selected_site %}
+<div id="status_help_modal" class="modal">
+  <div class="modal-content">
+    <p>
+      <strong>{{ 'registered_devices' | trans }}</strong><br/>
+      {{ 'registered_devices_desc' | trans }}
+      <br/>
+      <strong>{{ 'count_of_sent_messages' | trans }}</strong><br/>
+      {{ 'count_of_sent_messages_desc' | trans }}
+      <br/>
+    </p>
+  </div>
+</div>
+
+{% endif %}
+
+{% include 'infos.inc.twig' %}
+{% include 'errors.inc.twig' %}
+
+  <div class="row" style="margin:0;">
+    <div class="col s8 m8 l8">
+      <a class="btn waves-effect waves-light" href="{{ ROOT_PATH }}/site/{{selected_site.id}}/list">
+        <i class="valign material-icons left md-24">list</i>{{ 'display_notification_list' | trans }}
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="col s6 m6 l6">
+              <h5 style="margin-top:0;">
+                {{ selected_site.name }}
+                &nbsp;
+                <a class="modal-trigger" href="#status_help_modal"><i class="material-icons blue-text">help</i></a>
+              </h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s4 m2 l2">
+              {% if selected_site.icon %}
+                <img src="{{ ROOT_PATH }}/siteicons/{{ selected_site.icon }}" style="max-width:64px;" />
+              {% else %}
+                <i class="valign material-icons teal-text medium">photo</i>
+              {% endif %}
+            </div>
+            <div class="col s8">
+              {{ 'registered_devices' | trans }}: {{ target_count }} <br/>
+              {{ 'count_of_sent_messages' | trans }}: {{ sent_total }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

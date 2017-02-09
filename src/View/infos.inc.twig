@@ -1,0 +1,18 @@
+{# お知らせメッセージ #}
+{% if infos is defined and infos %}
+  <div id="info_message" class="card-panel teal-text text-lighten-1">
+    <div class="row valign-wrapper">
+      <div class="col s2 m2 l1">
+        <i class="valign material-icons blue-text medium">info</i>
+      </div>
+      <div class="col s10 m10 l11">
+        {% for info in infos %}
+          {{ info }}
+          {% if not loop.last %}
+            <br/>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}

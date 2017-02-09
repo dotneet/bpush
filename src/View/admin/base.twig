@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="referrer" content="origin">
+
+  <title>bpush admin</title>
+
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.css">
+  
+
+  <script src="{{ ROOT_PATH }}/bower_components/jquery/dist/jquery.min.js" defer></script>
+  <script src="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.js" defer></script>
+  <script src="{{ ROOT_PATH }}/bower_components/materialize/dist/js/materialize.min.js" defer></script>
+  {% block head_extension %}{% endblock %}
+
+  <script>
+    function addLoadListener(listener) {
+      if (window.addEventListener) {
+          window.addEventListener('load', listener);
+      } else if (window.attachEvent) {
+          window.attachEvent('onload', listener);
+      }
+    }
+
+    addLoadListener(function() {
+      $('.modal-trigger').leanModal();
+      $('select').material_select();
+      $('.tooltipped').tooltip({delay: 50});
+
+      {% block js_ready %}{% endblock %}
+    });
+
+    {% block js %}{% endblock %}
+  </script>
+</head>
+
+<body fullbleed layout vertical>
+  {% block header %}
+    <div class="center-align">
+      <h4>bpush admin</h4>
+    </div>
+  {% endblock %}
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+
+</html>
+

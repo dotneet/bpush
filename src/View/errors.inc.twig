@@ -1,0 +1,21 @@
+{# display error messages #}
+{% if errors is defined and errors %}
+  <div class="row">
+    <div class="col s12 offset-m2 m8 offset-l3 l6">
+      <div class="card-panel red-text text-lighten-1">
+        <div class="row valign-wrapper">
+          <div class="col s2 m3 l2">
+            <i class="valign material-icons orange-text medium">warning</i>
+          </div>
+          <div class="col s10 m9 l10">
+            {% for error in errors %}
+              {{ error }}
+              {% if not loop.last %}<br/>{% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+

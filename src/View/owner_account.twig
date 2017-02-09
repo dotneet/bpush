@@ -1,0 +1,103 @@
+{% extends 'owner_base.twig' %}
+
+{% block page_name %}<i class="material-icons">perm_identity</i>&nbsp;{{ 'account_setting' | trans }}{% endblock %}
+
+{% block js %}
+  function generate_token() {
+    var currentApiToken = $('#api_token').val();
+    if ( currentApiToken != "" ) {
+      if ( !confirm('{{ 'owner_account.your_token_will_be_invalid' | trans }}') ) {
+        return false;
+      }
+    }
+    
+    $.ajax('{{ ROOT_PATH }}/owner/generate_api_token', {
+      method: "POST",
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function(json) {
+        $('#api_token').val(json.api_token);
+      }
+    });
+  }
+{% endblock %}
+
+{% block js_ready %}
+{% endblock %}
+
+{% block content %}
+
+{# site registeration dialog. #}
+<div id="site_dialog" class="modal" style="width: 400px; padding: 1em;">
+  <form action="{{ ROOT_PATH }}/owner/site/post" method="post" onsubmit="$('#site_dialog').modal('close'); return true;">
+    <input type="hidden" name="ctoken" value="{{ CSRF_TOKEN }}"/>
+    <div class="modal-content">
+      <h4 class="center-align">{{ 'owner_account.register_site' | trans }}</h4>
+      <div class="input-field">
+        <input id="site_name" name="site_name" type="text" class="validate" required>
+        <label for="site_name">{{ 'site_name' | trans }}<span class="red-text">*</span></label>
+      </div>
+      <div class="input-field">
+        <input id="site_url" name="site_url" type="text" class="validate" pattern="https?://.+" required>
+        <label for="site_url">{{ 'site_url' | trans }} (ex. http://examaple.com/)<span class="red-text">*</span></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" role="button" class="modal-action modal-close waves-effect waves-light btn red lighten-2" style="margin-left: 1em;">
+        <i class="material-icons left">close</i>{{ 'close' | trans }}</button>
+      <button type="submit" role="submit" class="modal-action waves-effect waves-light btn teal lighten-2">
+        <i class="material-icons left">create</i>{{ 'register' | trans }}</button>
+    </div>
+  </form>
+</div>
+
+{% include 'infos.inc.twig' %}
+{% include 'errors.inc.twig' %}
+
+{% if sites|length > 0 %}
+<h5>{{ 'account' | trans }}</h5>
+<div>
+  {{ 'email' | trans }}：{{ owner.mail }}
+</div>
+<br/>
+<h5>
+  {{ 'registered_sites' | trans }}
+  <a class="modal-trigger" href="#site_dialog">
+    <i class="valign material-icons">add_box</i>
+  </a>
+</h5>
+{% endif %}
+<div>
+  {% if sites|length > 0 %}
+    <div class="collection">
+      {% for site in sites %}
+        <a class="collection-item" href="{{ ROOT_PATH }}/owner/select_site?id={{ site.id }}">{{ site.name }}<i class="fa fa-chevron-right right grey-text"></i></a>
+      {% endfor %}
+    </div>
+    <br/>
+  {% else %}
+    <p>
+      {{ 'first_step' | trans }}<br/>
+      <br/>
+      <a class="waves-effect waves-light btn modal-trigger" href="#site_dialog">{{ 'owner_account.register_site' | trans }}</a>
+    </p>
+  {% endif %}
+</div>
+{% if sites|length > 0 %}
+  <div class="row">
+    <h5 class="left-align">API</h5>
+  </div>
+  <div style="margin-top: 1em; padding-left: 1em;">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="api_token" name="api_token" type="text" class="validate" placeholder="{{ 'api_token' | trans }}" disabled value="{% if api_token_info %}{{ api_token_info.api_token }}{% endif %}" style="color:#666666;">
+        <label for="edit_subject" style="color:#666666;">{{ 'api_token' | trans }}</label>
+      </div>
+      <a class="btn waves-effect waves-light" onclick="generate_token()">{{ 'generate_token' | trans }}</a>
+    </div>
+  </div>
+{% endif %}
+<br/>
+{% endblock %}
+

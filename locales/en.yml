@@ -1,0 +1,188 @@
+login: "Login"
+logout: "Logout"
+password: "Password"
+forgot_password: "Forgot your password?"
+password_reset: "Password Reset"
+reset: "Reset"
+account: "Account"
+account_setting: "Account Setting"
+account_info: "Account Information"
+new_registeration: "Register"
+email: "E-Mail"
+registered_sites: "Registered Sites"
+generate_token: "Generate Token"
+api_token: "API Token"
+contact: "contact"
+dashboard: "Dashboard"
+push_notification: "Notification"
+notification: 'Notification'
+notification_list: 'Notification List'
+setting: "Setting"
+display_notification_list: "Display Notifications"
+registered_devices: "Registered Devices"
+registered_devices_desc: >
+  number of devices that subscribe this site.
+total_sent_messages: "Total Sent Messages"
+count_of_sent_messages: "Sent Messages"
+count_of_sent_messages_desc: >
+  number of messages that you sent in this month.
+create_notification: "Create Notification"
+name: "Name"
+site_name: "Site Name"
+url: "URL"
+site_url: "Site Url"
+close: "Close"
+register: "Register"
+update: "Update"
+title: "Title"
+content: "Content"
+item_unit: "Items"
+button_embedding: "Button Embedding"
+direct_embedding: "Direct Embedding"
+notification_status_done: "Done"
+notification_status_failed: "Failed"
+notification_status_scheduled: "Scheduled"
+notification_status_available: "Available"
+unsent: 'Unsent'
+click: 'Click'
+click_count: 'click count'
+receive: 'Receive'
+receive_count: 'Receive Count'
+created_datetime: 'Created At'
+link: 'Link'
+send: 'Send'
+delete: 'Delete'
+edit: 'Edit'
+upload: 'Upload'
+select: 'Select'
+ok: 'OK'
+are_you_sure_to_send: 'Are you sure to send?'
+are_you_sure_to_delete: 'Are you sure to delete?'
+enable: "Enable"
+disable: "Disable"
+registeration_confirmation: 'Registeration Confirmation'
+messages:
+  new_password_is_set: "New password is set."
+  registeration_is_done: "Registeration is done."
+  site_information_is_updated: "Site information is updated."
+  site_registered: "Site is registered. Please move to setting page of the site and follow embedding instructions."
+  site_is_deleted: "The site is deleted."
+  start_sending: "Start sending notifications."
+errors:
+  login_failed: "Login is failed."
+  invalid_input: "Your input is invalid."
+  error: 'Error has occured.'
+  operation_is_not_allowed: "This operation is not allowed."
+  mail_address_is_incorrect: "Mail address is incorrect."
+  password_is_incorrect: "Password is incorrect."
+  email_is_already_used: "This email is already used."
+  mail_sending_is_failed: "Mail sending is failed."
+  email_is_not_found: "The email is not found."
+  leach_to_max_send_messages: "failed to send notification because leach to max send messages."
+signup:
+  error_password_input: "Please input a password in 8-16 letters of alphabet or number."
+  error_different_password: "Your password and password(Confirmation) are different."
+  error_uncheck_agreement: "Please agree the Agreement & Disclaimer to use this system."
+  title: 'Sign Up'
+  register: 'signup'
+  password: "Password(8-16 letters of alphabet or number)"
+  password_confirm: "Password(Confirmation)"
+  agreement_title: 'Agreement & Disclaimer'
+  agree_text_left: 'I agree the '
+  agree_text_right: '.'
+  agreement: >
+    The user assumes all responsibility and risk for the use of this system and the Internet generally.
+signup_done:
+  title: "Provisional registration is done."
+  message: >
+    You receive an email for registration.<br>
+    Please read an email and finish registration.
+password_reset:
+  title: "Password Reset"
+  password: "Password(8-16 letters of alphabet or number)"
+  password_confirm: "Password(Confirmation)"
+  setting: "Set Password"
+  done: >
+    We sent an email to you. <br>
+    Please confirm an email and reset your password. 
+owner_notification:
+  link_url: "Link Url"
+  scheduled_time: "Scheduled Time"
+  image_size_too_big: "Choose an image under 100KB."
+  error: 'Error has occured.'
+  error_by_max_send_times: "Error by limitation of max send times."
+  error_by_max_send_messages: "Error by limitation of max send messages."
+owner_account:
+  first_step: "Firstly, register your website."
+  register_site: "Site Registration"
+  your_token_will_be_invalid: "Current your token will be invalid. Are you sure?"
+owner_setting:
+  site_information: 'Site Information'
+  icon: "Icon"
+  site_icon: 'Site Icon'
+  use_notification_list: 'Use notification list'
+  use: 'Use'
+  not_use: 'Not Use'
+  rss_coordination: 'RSS Coordination'
+  status: 'Status'
+  feed_url: 'Feed Url'
+  section_setup: 'Set Up'
+  section_other: 'Other'
+  image_size_too_big: "Choose an image under 100KB."
+  error: 'Error has occured.'
+  delete_this_site: 'Delete This Site'
+  icon_setup:
+    description: >
+      Set an icon displayed in notification.<br/>
+      An icon must be png or jpeg format under 100KB.
+  setup:
+    paste_code: >
+      Paste following code at place you want to displayed a button.
+    display_example: 'Display Example'
+    for_customize: 'For customizing(explanation assume you understand HTML)'
+    for_customize_desc: >
+      You can customize a button by editing div tag attributes. <br>
+      Following attributes can be edited for customizing.
+    attribute: "Attribute"
+    content: "Explanation"
+    image_src: "apply to src attribute of an img tag."
+    image_width: "apply to width attribute of an img tag."
+    image_height: "apply to height attribute of an img tag."
+    data_back: >
+      Return to this url after an user finished push notification setting. You must use an absolute url.<br>
+      <span style="color:red">This attribute must be set.</span>
+    data_target: "apply to target attribute of a tag."
+  direct:
+    description: >
+      "Direct Embedding" is a more natural way to embedd a push notification function to your website.
+      You don't need to display a button to urge subscribing notification. <br>
+      "Direct Embedding" require a website <span style="color:red;">to support SSL</span>.<br/>
+      If your website doesn't support SSL or doesn't have permission to write on root folder choose "Button Embedding".<br>
+    setup: "How to Setup"
+    download_zip: >
+       Download a zip file from a following button and extract it. Upload files to a root folder of your website.
+    paste_code: >
+      Paste a following code in head tag of your website's HTML.
+site_join:
+  title: 'Notification Setting for %site_name%'
+  now_setting: "Now Setting..."
+  done: 'Setting for push notification is done.'
+  back: 'Back'
+  back_to_site: 'Back to site'
+  error_by_setting: >
+    Notification is set disable by your browser setting.<br>
+    Please set to enable at setting screen of your browser.
+  error_by_not_support: >
+    Your browser doesn't support push notification.<br>
+    If you want to use push notification use Chrome browser.
+site_list:
+  title: 'Notifications of %site_name%'
+  notification_off: 'unsubscribe is succeeded.'
+  notification_off_failed: 'unsubscribe is failed.'
+  back_to_owner_page: 'back to owner page'
+  receive_notification: 'subscribe'
+  stop_subscription: 'unsubscribe'
+  history: 'history'
+  empty: 'No notifications.'
+
+

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="referrer" content="origin">
+
+  <title>bpush - Push Notification System for Website</title>
+  <meta name="description" content="bpush is a web push notification system.">
+
+  <link rel="manifest" href="{{ ROOT_PATH }}/manifest.json">
+  <link rel="icon" type="image/png" href="{{ ROOT_PATH }}/icon_256.png">
+  <link rel="apple-touch-icon" sizes="256x256" href="/icon_256.png">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/materialize/dist/css/materialize.min.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/bower_components/components-font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ ROOT_PATH }}/css/owner.css">
+
+  <script src="{{ ROOT_PATH }}/bower_components/jquery/dist/jquery.min.js" defer></script>
+  <script src="{{ ROOT_PATH }}/bower_components/datetimepicker/jquery.datetimepicker.js" defer></script>
+  {% block head_extension %}{% endblock %}
+
+  <script>
+    function addLoadListener(listener) {
+      if (window.addEventListener) {
+          window.addEventListener('load', listener);
+      } else if (window.attachEvent) {
+          window.attachEvent('onload', listener);
+      }
+    }
+
+    (function(){
+      function onLoadAll() {
+        if ( typeof(jQuery) === "undefined" ) {
+          setTimeout(onLoadAll, 10);
+        } else {
+          $(".button-collapse").sideNav();
+          $('.collapsible').collapsible({
+            accordion: false
+          });
+          $('.modal').modal();
+          $('select').material_select();
+          $('.tooltipped').tooltip({delay: 50});
+          $('side-nav .dropdown-button').dropdown({
+              inDuration: 300,
+              outDuration: 225,
+              constrainWidth: true, // Does not change width of dropdown to that of the activator
+              hover: false, // Activate on hover
+              gutter: 0, // Spacing from edge
+              alignment: 'left',
+              belowOrigin: false // Displays dropdown below the button
+            }
+          );
+
+          {% block js_ready %}{% endblock %}
+        }
+      }
+      addLoadListener(onLoadAll);
+    })();
+
+    {% block js %}{% endblock %}
+  </script>
+</head>
+
+<body>
+  {% block header %}
+    <header>
+      {% if selected_site %}
+          <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;">
+            <li class="logo" style="padding: 0;">
+              <a class='btn dropdown-button' href='#' data-activates='sites_dropdown' style='overflow:hidden; text-overflow: ellipsis;margin:0;padding:0;'>
+                <i class="material-icons right valign" style="font-size:2rem;">arrow_drop_down</i>
+                {{ selected_site.name }}
+              </a>
+              <ul id="sites_dropdown" class="dropdown-content" style="text-overflow: ellipsis;">
+                {% for site in sites %}
+                  <li>
+                    <a href="{{ROOT_PATH}}/owner/select_site?id={{site.id}}" style="font-size: 14px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">
+                      {% if selected_site.id == site.id %}<i class="material-icons teal-text" style="width:24px;height:24px;line-height:24px;">done</i>{% endif %}{{site.name}}</a>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul> 
+            </li>
+            <li class="bold {% if PAGE_ID=="dashboard" %}active{% endif %}">
+              <a class="waves-effect waves-teal" href="{{ROOT_PATH}}/owner/dashboard">
+                <i class="material-icons">dashboard</i>
+                {{ 'dashboard' | trans }}
+              </a>
+            </li>
+            <li class="bold {% if PAGE_ID=="notifications" %}active{% endif %}">
+              <a class="waves-effect waves-teal" href="{{ROOT_PATH}}/owner/notifications">
+                <i class="material-icons">notifications</i>
+                {{ 'push_notification' | trans }}
+              </a>
+            </li>
+            <li class="bold valign {% if PAGE_ID=="settings" %}active{% endif %}">
+              <a class="waves-effect waves-teal" href="{{ROOT_PATH}}/owner/settings">
+                <i class="material-icons">settings</i>
+                {{ 'setting' | trans }}
+              </a>
+            </li>
+          </ul>
+      {% endif %}
+    </header>
+  {% endblock %}
+  <div class="main">
+    <div class="owner_container">
+      <div class="row page_header">
+        <div class="col s2">
+          <a href="#" data-activates="nav-mobile" class="button-collapse top-nav hide-on-large-only">
+            <i class="material-icons">menu</i>
+          </a>
+          &nbsp;
+        </div>
+        <div class="col s10">
+          <p class="right-align" style="margin:0;">
+            {% if selected_site %}
+              <a href="{{ ROOT_PATH }}/site/{{selected_site.id}}/join?back={{ (ROOT_PATH ~ '/owner/dashboard') | url_encode }}">
+                {% if constant('DEFAULT_LOCALE') == 'ja' %}
+                  <img src="{{ ROOT_PATH }}/connect/button1.png" width="60" height="20" />
+                {% else %}
+                  <img src="{{ ROOT_PATH }}/connect/button1_en.png" width="100" height="20" />
+                {% endif %}
+              </a>
+            {% endif %}
+            &nbsp;&nbsp;
+            <a href="{{ ROOT_PATH }}/owner/account" class="">{{ 'account_setting' | trans }}</a>
+            &nbsp;&nbsp;
+            <a href="{{ ROOT_PATH }}/logout" class="">{{ 'logout'|trans }}</a>
+          </p>
+        </div>
+      </div>
+      <h2 class="hide-on-large-only">
+        {% block page_name %}page_name{% endblock %}
+      </h2>
+      {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+      <br/><br/>
+      <div class="hide-on-med-and-up center-align">
+        <hr/>
+        <p class="center-align" style="margin: 0px; font-size:24px;">
+          <span style="vertical-align:top;">bpush.net</span>&nbsp;&nbsp;
+          <a href="{{ ROOT_PATH }}/"><i class="material-icons small blue-grey-text">home</i></a>&nbsp;&nbsp;
+          <a href="mailto:{{ constant('CONTACT_MAIL') }}"><i class="material-icons small blue-grey-text">email</i></a>
+        </p>
+      </div>
+      {% include 'footer.inc.twig' %}
+    {% endblock %}
+  </div>
+  <script src="{{ ROOT_PATH }}/bower_components/materialize/dist/js/materialize.min.js" defer></script>
+</body>
+
+</html>
+
