@@ -35,10 +35,6 @@ npm install
 bower install
 gulp sass closure
 
-if [ ! -f vapid_keys.php ];then
-  php scripts/generate_vapid_keys.php
-fi
-
 if [ ! -d logs ];then
   mkdir logs
   chmod 777 logs
