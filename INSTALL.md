@@ -84,6 +84,6 @@ Configure a cron for running these two files.
 
 6. Setting a background process.
 
-`scripts/notifier.php` is background worker that is run on PHP(client mode).
+`scripts/notifier.php` is background worker that is run by PHP client mode.
 Please set up a process monitoring tool to run this program as a daemon.
 
