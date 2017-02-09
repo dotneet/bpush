@@ -14,12 +14,13 @@ bpush is designed to run on a machine with LAMP.
 
 Your system must be installed following php extensions for running bpush.
 
- - pdo
+ - PDO
  - pdo_mysql
  - mysqlnd
  - json
  - mbstring
  - dom
+ - xml
  - curl
  - intl
  - gmp

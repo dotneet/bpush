@@ -22,7 +22,8 @@ class SiteApiController extends ControllerBase
             $visitorId = $request->get('visitor_id');
             $data = json_decode($json, true);
             if ( isset($data['endpoint']) ) {
-              $subscriptionId = array_pop(explode('/',$data['endpoint']));
+              $e = explode('/',$data['endpoint']);
+              $subscriptionId = $e[count($e) - 1];
             } else {
               $subscriptionId = $data['subscriptionId'];
             }

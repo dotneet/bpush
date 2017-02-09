@@ -16,6 +16,27 @@ use Monolog\Formatter\LineFormatter;
 
 date_default_timezone_set(DEFAULT_TIMEZONE);
 
+function check_loaded_extensions() {
+    $required_extensions = ['xml','intl','zip','mbstring','PDO','pdo_mysql','dom','curl','json','gmp'];
+    $extensions = get_loaded_extensions();
+    $result = [];
+    foreach ( $required_extensions as $ext ) {
+        if ( !in_array($ext, $extensions) ) {
+            $result[] = $ext;
+        }
+    }
+    return $result;
+}
+
+$extensions_not_found = check_loaded_extensions();
+if ( !empty($extensions_not_found) ) {
+    fputs(STDERR, "Please sure to install these extensions:\n");
+    foreach ( $extensions_not_found as $ext ) {
+        fputs(STDERR, " - $ext\n");
+    }
+    exit(1);
+}
+
 $app = new Silex\Application(isset($dependencies) ? $dependencies : array());
 
 if ( BPUSH_ENVIRONMENT != 'PRODUCTION' ) {
