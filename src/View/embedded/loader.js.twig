@@ -23,7 +23,7 @@ var bpush_controller = null;
     if ( document.readyState === 'complete' ) {
       bpush_execute_loading();
     } else {
-      setTimeout(bpush_loader, 50);
+      setTimeout(bpush_controller.init, 50);
     }
   }
 
