@@ -24,20 +24,5 @@ if ( file_put_contents(PROJECT_ROOT . '/public/manifest.json', $content) === fal
   exit(2);
 }
 
-$keyfile = PROJECT_ROOT .  '/vapid_keys.php';
-
-if ( file_exists($keyfile) ) {
-  $keys = VAPID::createVapidKeys();
-  file_put_contents(PROJECT_ROOT .  '/vapid_keys.php', <<<EOT
-<?php
-function getVapidKeys() {
-  return array(
-    'public_key' => "{$keys['publicKey']}",
-    'private_key' => "{$keys['privateKey']}"
-  );
-}
-EOT
-);
-
 exit(0);
 

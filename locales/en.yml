@@ -65,7 +65,7 @@ messages:
   new_password_is_set: "New password is set."
   registeration_is_done: "Registeration is done."
   site_information_is_updated: "Site information is updated."
-  site_registered: "Site is registered. Please move to setting page of the site and follow embedding instructions."
+  site_registered: "The site registration is completed. Please move to setting page of the site and follow embedding instructions."
   site_is_deleted: "The site is deleted."
   start_sending: "Start sending notifications."
 errors:
@@ -113,7 +113,7 @@ owner_notification:
   error_by_max_send_times: "Error by limitation of max send times."
   error_by_max_send_messages: "Error by limitation of max send messages."
 owner_account:
-  first_step: "Firstly, register your website."
+  first_step: "At first register your website."
   register_site: "Site Registration"
   your_token_will_be_invalid: "Current your token will be invalid. Are you sure?"
 owner_setting:

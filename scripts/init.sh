@@ -52,3 +52,7 @@ if [ ! -d cache ];then
   chmod 777 cache
 fi 
 
+if [ ! -f vapid_keys.php ];then
+  php scripts/generate_vapid_keys.php
+fi
+

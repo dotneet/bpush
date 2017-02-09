@@ -14,7 +14,7 @@ use Silex\Provider\FormServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Monolog\Formatter\LineFormatter;
 
-date_default_timezone_set('Asia/Tokyo');
+date_default_timezone_set(DEFAULT_TIMEZONE);
 
 $app = new Silex\Application(isset($dependencies) ? $dependencies : array());
 

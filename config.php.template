@@ -3,13 +3,17 @@
 // PRODUCTION: debug mode is off. DEVELOPMENT: debug mode is on.
 define('BPUSH_ENVIRONMENT', 'PRODUCTION');
 
+// timezon and locale
+define('DEFAULT_TIMEZONE', 'UTC');
+define('DEFAULT_LOCALE', 'en');   // 'en' or 'ja'
+
 // Use VAPID Protocol. (Firefox support)
 define('USE_VAPID_PROTOCOL', true);
 
 // Your domain name hosted on https. ex. example.com
 define('DOMAIN_NAME', 'example.com');
 // If you host this service in a subdirectory set a path.
-define('ROOT_PATH', '/');
+define('ROOT_PATH', '');
 // administrator's mail address.
 define('CONTACT_MAIL', 'admin@example.com');
 
@@ -97,7 +101,6 @@ define('MAX_SITES_PER_OWNER', 10);
  * Application Deplyment Setting.
  * (Normally, do not edit following items)
  */
-define('DEFAULT_LOCALE', 'en');
 define('PROJECT_ROOT', __DIR__);
 define('PUBLIC_ROOT', __DIR__ . '/public');
 define('TWIG_CACHE', __DIR__ . '/cache');

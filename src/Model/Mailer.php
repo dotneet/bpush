@@ -1,8 +1,8 @@
 <?php
 namespace BPush\Model;
 
-require_once "Mail.php";
-
+use Mail;
+use PEAR;
 use Aws\Ses\SesClient as SesClient;
 use Aws\Common\Enum\Region as Region;
 use Aws\Ses\Exception\SesException as SesException;
@@ -53,14 +53,16 @@ class Mailer
     {
         // Mail class uses mb_send_mail() internally.
         // mb_language(),mb_internal_encoding() affect behavior of mb_send_mail().
-        mb_language("japanese");
+        mb_language(DEFAULT_LOCALE);
         mb_internal_encoding("UTF-8");
         
-        $from = 'bpush<' . NOREPLY_MAIL_ADDRESS . '>';
+        $from = 'system<' . NOREPLY_MAIL_ADDRESS . '>';
         $headers = [
             'From' => $from,
             'To' => $to,
-            'Subject' => mb_encode_mimeheader($subject)
+            'Subject' => mb_encode_mimeheader($subject),
+            'Content-Type' => 'text/plain; charset="UTF-8"',
+            'Content-Transfer-Encoding' => 'base64'
         ];
 
         $smtp = Mail::factory('smtp', [
@@ -73,7 +75,6 @@ class Mailer
             'persist' => false
         ]); 
 
-        $body = mb_encode_mimeheader($body, 'ISO-2022-JP', "UTF-8");
         $mail = $smtp->send($to, $headers, $body);
 
         return !PEAR::isError($mail);

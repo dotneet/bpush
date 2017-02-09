@@ -1,14 +1,12 @@
 <?php
 
-set_include_path(get_include_path() . ':' . __DIR__ . '/../src');
-set_include_path(get_include_path() . ':' . __DIR__ . '/../lib');
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config.php';
 
 use Minishlink\WebPush\VAPID;
 
+$file = __DIR__ . '/../vapid_keys.php';
 $keys = VAPID::createVapidKeys();
-file_put_contents(PROJECT_ROOT .  '/vapid_keys.php', <<<EOT
+file_put_contents($file, <<<EOT
 <?php
 function getVapidKeys() {
   return array(

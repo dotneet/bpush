@@ -93,7 +93,8 @@ class AuthController extends ControllerBase
                 $owner = $app['repository']->owner->create($mail, $password);
             }
             try {
-                $mailBody = $this->render('mail/signup.twig', ['owner'=>$owner]);
+                $template = 'mail/signup_' . DEFAULT_LOCALE . '.twig';
+                $mailBody = $this->render($template, ['owner'=>$owner]);
                 if ( !Mailer::send($mail, $this->trans('registeration_confirmation'), $mailBody) ) {
                     $app['logger']->addWarning('mail error. mail=' . $mail);
                 }
@@ -179,7 +180,8 @@ class AuthController extends ControllerBase
                 $key = sha1($owner->mail);
                 $token = uniqid() . uniqid();
                 $app['redis']->setex('password_reset/' . $token, 60*30, $mail);
-                $mailBody = $this->render('mail/password_reset.twig', ['token'=>$token,'owner'=>$owner]);
+                $template = 'mail/password_reset_' . DEFAULT_LOCALE . '.twig';
+                $mailBody = $this->render($template, ['token'=>$token,'owner'=>$owner]);
                 if ( !Mailer::send($mail, $this->trans('password_reset'), $mailBody) ) {
                     $app['logger']->addWarning('mail error. mail=' . $mail);
                 }
