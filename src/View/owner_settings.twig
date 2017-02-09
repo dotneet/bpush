@@ -164,8 +164,8 @@ $('#edit_scheduled_at').datetimepicker({step: 15});
       </li>
       <li>
         {{ 'owner_setting.direct.paste_code' | trans }}<br>
-        <code><pre style="font-size:12px; line-height:1em;">&lt;script src="/bpush_loader.js"&gt;&lt;/script&gt;
-&lt;script&gt;bpush_controller.init();&lt;/script&gt;</pre></code>
+        <code><pre style="font-size:12px; line-height:1em;">&lt;script src="./bpush_loader.js"&gt;&lt;/script&gt;
+&lt;script&gt;bpush_controller.init('{{ selected_site.app_key }}');&lt;/script&gt;</pre></code>
       </li>
     </ol>
   </div>

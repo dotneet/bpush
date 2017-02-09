@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="manifest" href="./bpush_manifest.json" />
-    <script src="./bpush_swlib.js"></script>
+    <link rel="manifest" href="./manifest_{{ app_key }}.json" />
+    <script src="./swlib_{{ app_key }}.js"></script>
     <script language="javascript">
     //<!--
     {% include 'embedded/global.js.twig' with {'vapid_public_key': vapid_public_key} %}

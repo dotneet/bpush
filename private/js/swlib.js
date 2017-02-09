@@ -99,7 +99,7 @@ function registerServiceWorker() {
         if ( isSimpleEmbeddedMode() ) {
           serviceWorkerPath = './service_worker';
         } else {
-          serviceWorkerPath = './bpush_worker.js';
+          serviceWorkerPath = './worker_' + _bpush_env.app_key + '.js';
         }
         var reg = null;
         navigator.serviceWorker.register(serviceWorkerPath, {

@@ -344,7 +344,10 @@ class OwnerController extends ControllerBase
             $site = $app['repository']->site->find($siteId);
             $zip = new \ZipArchive();
             $filename = tempnam(sys_get_temp_dir(), 'bpush_');
+            $rootDir = 'direct-embedded';
             if ( $zip->open($filename, \ZipArchive::CREATE) ) {
+                $zip->addEmptyDir($rootDir);
+                $rootDir .= DIRECTORY_SEPARATOR;
                 $jsGen = new JsGenerator($app);
                 $serviceWorkerJs = $jsGen->generateServiceWorker($site);
 
@@ -367,11 +370,11 @@ class OwnerController extends ControllerBase
                 $manifestJson = $this->render('embedded/manifest.json.twig', [
                     'GOOGLE_PROJECT_NUMBER' => $google_project_number
                 ]);
-                $zip->addFromString('bpush_worker.js', $serviceWorkerJs);
-                $zip->addFromString('bpush_loader.js', $loaderJs);
-                $zip->addFromString('bpush.html', $bpushHtml);
-                $zip->addFromString('bpush_manifest.json', $manifestJson);
-                $zip->addFile(PUBLIC_ROOT . '/js/swlib.js', 'bpush_swlib.js');
+                $zip->addFromString($rootDir . "bpush/worker_{$site['app_key']}.js", $serviceWorkerJs);
+                $zip->addFromString($rootDir . "bpush_loader.js", $loaderJs);
+                $zip->addFromString($rootDir . "bpush/loader_{$site['app_key']}.html", $bpushHtml);
+                $zip->addFromString($rootDir . "bpush/manifest_{$site['app_key']}.json", $manifestJson);
+                $zip->addFile(PUBLIC_ROOT . '/js/swlib.js', $rootDir . "bpush/swlib_{$site['app_key']}.js");
                 $zip->close();
                 $zipContent = file_get_contents($filename);
                 unlink($filename);
@@ -379,7 +382,7 @@ class OwnerController extends ControllerBase
                 return new Response(
                     $zipContent, 200, [
                         'Content-Type' => 'application/zip',
-                        'Content-Disposition' => 'attachment; filename=bpush-embedded.zip'
+                        'Content-Disposition' => 'attachment; filename=direct-embedded.zip'
                     ]
                 );
             } else {

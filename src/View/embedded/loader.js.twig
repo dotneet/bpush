@@ -5,10 +5,10 @@ var bpush_controller = null;
 
   var frame_id = 'bpush_loader_frame';
 
-  function bpush_execute_loading() {
+  function bpush_execute_loading(app_key) {
     var iframe = document.createElement('iframe');
     iframe.setAttribute('id', frame_id);
-    iframe.src = './bpush.html';
+    iframe.src = './bpush/loader_' + app_key + '.html';
     iframe.style.display = 'none';
     document.body.appendChild(iframe);
   }
@@ -16,14 +16,14 @@ var bpush_controller = null;
   function bpush_controller_object() {
   }
 
-  bpush_controller_object.prototype.init = function () {
+  bpush_controller_object.prototype.init = function (app_key) {
     if ( typeof(document.readyState) === 'undefined' ) {
       return;
     }
     if ( document.readyState === 'complete' ) {
-      bpush_execute_loading();
+      bpush_execute_loading(app_key);
     } else {
-      setTimeout(bpush_controller.init, 50);
+      setTimeout(bpush_controller.init, 50, app_key);
     }
   }
 
