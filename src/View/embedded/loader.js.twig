@@ -5,31 +5,38 @@ var bpush_controller = null;
 
   var frame_id = 'bpush_loader_frame';
 
-  function bpush_execute_loading(app_key) {
+  function bpush_execute_loading(app_key, onready) {
     var iframe = document.createElement('iframe');
     iframe.setAttribute('id', frame_id);
     iframe.src = './bpush/loader_' + app_key + '.html';
     iframe.style.display = 'none';
+    iframe.onload = function () {
+      if ( onready ) {
+        onready.apply();
+      }
+    };
     document.body.appendChild(iframe);
   }
 
   function bpush_controller_object() {
   }
 
-  bpush_controller_object.prototype.init = function (app_key) {
-    if ( typeof(document.readyState) === 'undefined' ) {
+  bpush_controller_object.prototype.init = function (app_key, onready) {
+    if ( typeof(document.readyState) === 'undefined' || !('serviceWorker' in navigator) ) {
       return;
     }
     if ( document.readyState === 'complete' ) {
-      bpush_execute_loading(app_key);
+      bpush_execute_loading(app_key, onready);
     } else {
-      setTimeout(bpush_controller.init, 50, app_key);
+      setTimeout(bpush_controller.init, 50, app_key, onready);
     }
   }
 
   bpush_controller_object.prototype.setVisitorTag = function (tag) {
       var frame = document.getElementById(frame_id);
-      return frame.contentWindow.setVisitorTag([tag])
+      if ( frame ) {
+        return frame.contentWindow.setVisitorTag([tag])
+      }
   }
 
   bpush_controller = new bpush_controller_object();
