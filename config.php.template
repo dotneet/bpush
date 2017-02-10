@@ -17,6 +17,11 @@ define('ROOT_PATH', '');
 // administrator's mail address.
 define('CONTACT_MAIL', 'admin@example.com');
 
+// Secret access key for hiding login page from public users.
+// In production environment this property should be set.
+// Access Url: https://your-domain/login?key=yourkey
+define('LOGIN_ACCESS_KEY', '');
+
 // settings for administrator page.
 define('ADMIN_USER', 'adminadmin');
 define('ADMIN_PASSWORD', 'adminadmin');

@@ -14,6 +14,9 @@ class HomeController extends ControllerBase
     {
         $controllers = parent::connect($app, false);
         $controllers->get('/', function(Request $request) use ($app) {
+            if ( !empty(LOGIN_ACCESS_KEY) && $request->get('key') != LOGIN_ACCESS_KEY ) {
+              return $this->render('no_access_key.twig');
+            }
             return $this->redirect('/login');
         });
         return $controllers;

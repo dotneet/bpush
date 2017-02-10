@@ -28,7 +28,11 @@ class AuthController extends ControllerBase
                 }
             }
 
-            return $this->render('login.twig');
+            if ( !empty(LOGIN_ACCESS_KEY) && $request->get('key') != LOGIN_ACCESS_KEY ) {
+              return $this->render('no_access_key.twig');
+            } else {
+              return $this->render('login.twig');
+            }
         });
 
         $controllers->get('/signup', function(Request $request) use ($app) {
@@ -36,6 +40,10 @@ class AuthController extends ControllerBase
         });
 
         $controllers->post('/login', function(Request $request) use ($app) {
+            if ( !empty(LOGIN_ACCESS_KEY) && $request->get('key') != LOGIN_ACCESS_KEY ) {
+              return $this->render('no_access_key.twig');
+            }
+
             $mail = $request->get('mail');
             $password = $request->get('password');
             $owner = $app['repository']->owner->findByMail($mail);

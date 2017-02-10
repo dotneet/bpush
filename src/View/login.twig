@@ -8,6 +8,7 @@
   <div class="row">
     <div class="card col s12 m6 offset-m3 l6 offset-l3">
       <form id="login_form" action="{{ROOT_PATH}}/login" method="post">
+        <input type="hidden" name="key" value="{{ constant('LOGIN_ACCESS_KEY') }}" />
         <div class="card-content">
           <div class="input-field">
             <input id="mail" class="validate" type="email" name="mail" maxlength="200" required>
