@@ -18,7 +18,7 @@ class AuthController extends ControllerBase
         $controllers->get('/login', function(Request $request) use ($app) {
 
             // if logged in move to owner page.
-            if ( $_SESSION['login'] ) {
+            if ( isset($_SESSION['login']) && $_SESSION['login'] ) {
                 $ownerId = $_SESSION['owner_id'];
                 if ( $ownerId ) {
                     $owner = $app['repository']->owner->find($ownerId);
