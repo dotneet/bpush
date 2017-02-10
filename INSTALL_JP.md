@@ -94,8 +94,8 @@ schema/*.sql に配置されているDDL文をデータベースで実行して�
 
 下記２ファイルをcronに指定してください。
 
- - scripts/send.php (1分毎)
- - scripts/watch_rss_feed.php (5分毎)
+ - scripts/send_scheduled_notification.php (推奨: 1分毎)
+ - scripts/watch_rss_feed.php (推奨: 5分毎)
 
 6. バックグラウンドプロセスの設定
 

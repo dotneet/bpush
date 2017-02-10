@@ -1,9 +1,9 @@
 ## FAQ
 
-### Do I need SSL and a domain to develop this system?
+### Do I need a SSL and a domain to develop this system?
 
-Yes, you need SSL and a domain.
-We recommend you to use Let's Encrypt.
+No, you don't need those in development.
+Service Worker can be hosted on localhost or https.
 
 ### Why isn't behavior of notifier.php changed althought changes php code?
 

@@ -80,8 +80,8 @@ Execute DDLs located in schema/*.sql on your database to create tables.
 
 Configure a cron for running these two files.
 
- - scripts/send.php (each minute)
- - scripts/watch_rss_feed.php (by 5 minutes)
+ - scripts/send_scheduled_notification.php (recommend to execute every minute)
+ - scripts/watch_rss_feed.php (recommend to execute by 5 minutes)
 
 6. Setting a background process.
 
