@@ -179,7 +179,7 @@ class OwnerController extends ControllerBase
 
             try {
                 if ( $siteId ) {
-                    $app['repository']->site->update($siteId, $siteName, $siteUrl, $useListPage);
+                    $app['repository']->site->update($siteId, $siteName, $siteUrl, null, $useListPage);
                     $this->userMessage->addInfo($this->trans('messages.site_information_is_updated'));
                     return $this->redirect('/owner/settings');
                 } else {
@@ -360,7 +360,7 @@ class OwnerController extends ControllerBase
                 if ( $notificationId ) {
                     $app['repository']->notification->update($notificationId, $subject, $content, $linkUrl, $scheduledAt);
                 } else {
-                    $app['repository']->notification->create($siteId, $subject, $content, $linkUrl, $scheduledAt);
+                    $app['repository']->notification->create($siteId, $subject, $content, $linkUrl, null, $scheduledAt);
                 }
                 $app['repository']->site->removeSiteJsonCache($siteId, '');
             } catch (\Exception $e) {
@@ -477,8 +477,10 @@ class OwnerController extends ControllerBase
             if ( $siteId && isset($sites[$siteId]) ) {
                 $selectedSite = $sites[$siteId];
             } else {
-                $siteId = $_SESSION['selected_site_id'];
-                $selectedSite = $sites[$siteId];
+                if ( isset($_SESSION['selected_site_id']) ) {
+                    $siteId = $_SESSION['selected_site_id'];
+                    $selectedSite = $sites[$siteId];
+                }
             }
         }
         return array($sites, $selectedSite);

@@ -43,7 +43,11 @@ class OwnerApiController extends ControllerBase
                 ]);
             }
 
-            $notification = $app['repository']->notification->create($req['site_id'], $req['subject'], $req['body'], $req['link_url'], null);
+            $imageUrl = null;
+            if ( isset($req['image_url']) ) {
+                $imageUrl = $req['image_url'];
+            }
+            $notification = $app['repository']->notification->create($req['site_id'], $req['subject'], $req['body'], $req['link_url'], $imageUrl, null);
             $notification->send();
 
             return new JsonResponse([
@@ -73,7 +77,11 @@ class OwnerApiController extends ControllerBase
                 return new JsonResponse(["message" => "site_id is invalid."], 400);
             }
 
-            $notification = $app['repository']->notification->create($req['site_id'], $req['subject'], $req['body'], $req['link_url'], null, false);
+            $imageUrl = null;
+            if ( isset($req['image_url']) ) {
+                $imageUrl = $req['image_url'];
+            }
+            $notification = $app['repository']->notification->create($req['site_id'], $req['subject'], $req['body'], $req['link_url'], $imageUrl, null, false);
             $notification->send(['tags' => $req['tags']]);
 
             return new JsonResponse([

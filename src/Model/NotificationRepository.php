@@ -77,11 +77,11 @@ class NotificationRepository
         return $this->db->fetchColumn($sql, array($siteId));
     }
 
-    public function create($siteId, $subject, $content, $postUrl, $scheduledAt, $visible=true)
+    public function create($siteId, $subject, $content, $postUrl, $imageUrl, $scheduledAt, $visible=true)
     {
         $scheduledAt = $scheduledAt ? $scheduledAt : null;
-        $sql = 'INSERT INTO notifications(site_id,subject,content,post_url,scheduled_at,visible,created) VALUES(?, ?, ?, ?, ?, ?,?)';
-        $this->db->executeUpdate($sql, array($siteId, $subject, $content, $postUrl, $scheduledAt, $visible ? 1 : 0,strftime('%F %T')));
+        $sql = 'INSERT INTO notifications(site_id,subject,content,post_url,image_url,scheduled_at,visible,created) VALUES(?, ?, ?, ?, ?, ?, ?,?)';
+        $this->db->executeUpdate($sql, array($siteId, $subject, $content, $postUrl, $imageUrl, $scheduledAt, $visible ? 1 : 0,strftime('%F %T')));
         $id = $this->db->lastInsertId();
         return $this->find($id);
     }
@@ -92,11 +92,11 @@ class NotificationRepository
         return $this->db->executeUpdate($sql, array($notificationId));
     }
 
-    public function update($notificationId, $subject, $content, $postUrl, $scheduledAt)
+    public function update($notificationId, $subject, $content, $postUrl, $imageUrl, $scheduledAt)
     {
         $scheduledAt = $scheduledAt ? $scheduledAt : null;
-        $sql = 'UPDATE notifications SET subject = ?, content = ?, post_url = ?, scheduled_at = ? WHERE id = ?';
-        return $this->db->executeUpdate($sql, array($subject, $content, $postUrl, $scheduledAt, $notificationId));
+        $sql = 'UPDATE notifications SET subject = ?, content = ?, post_url = ?, image_url = ?, scheduled_at = ? WHERE id = ?';
+        return $this->db->executeUpdate($sql, array($subject, $content, $postUrl, $iamgeUrl, $scheduledAt, $notificationId));
     }
 
     public function updateScheduledAt($notificationId, $time)
