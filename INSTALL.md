@@ -56,34 +56,28 @@ URL: https://console.cloud.google.com/
 
 # Installation
 
-1. Run init.sh
+1. Create config.php
+
+Change a file name from 'config.php.template' to 'config.php' and edit it.
+
+2. Run init.sh
 
 ```
 ./scripts/init.sh
 ```
 
-2. Create config.php
-
-Change a file name from 'config.php.template' to 'config.php' and edit it.
-
-3. Generate files required by system.
-
-``
-php scripts/generate_init_files.php
-```
-
-4. Create database tables.
+3. Create database tables.
 
 Execute DDLs located in schema/*.sql on your database to create tables.
 
-5. cron
+4. cron
 
 Configure a cron for running these two files.
 
  - scripts/send_scheduled_notification.php (recommend to execute every minute)
  - scripts/watch_rss_feed.php (recommend to execute by 5 minutes)
 
-6. Setting a background process.
+5. Setting a background process.
 
 `scripts/notifier.php` is background worker that is run by PHP client mode.
 Please set up a process monitoring tool to run this program as a daemon.

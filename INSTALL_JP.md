@@ -70,35 +70,30 @@ URL: https://console.cloud.google.com/
 
 # ライブラリのインストールと初期設定
 
-1. 初期化スクリプトの実行
+1. config.php の作成
+
+config.php.template から config.php を作成し、設定項目を入力します。
+
+2. 初期化スクリプトの実行
 
 ```
 ./scripts/init.sh
 ```
 
-2. config.php の作成
-
-config.php.template から config.php を作成し、設定項目を入力します。
-
-3. 初期ファイルの生成
-
-``
-php scripts/generate_init_files.php
-```
-
-4. データベーステーブルの作成
+3. データベーステーブルの作成
 
 schema/*.sql に配置されているDDL文をデータベースで実行してテーブルを作成してください。
 
-5. cronの設定
+4. cronの設定
 
 下記２ファイルをcronに指定してください。
 
  - scripts/send_scheduled_notification.php (推奨: 1分毎)
  - scripts/watch_rss_feed.php (推奨: 5分毎)
 
-6. バックグラウンドプロセスの設定
+5. バックグラウンドプロセスの設定
 
 `scripts/notifier.php` はphpのクライアントモードで起動するバックグラウンドプロセスです。
 supervisord などのソフトウェアを使いデーモンとして起動する設定を行ってください。
+
 

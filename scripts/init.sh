@@ -56,3 +56,5 @@ if [ ! -f vapid_keys.php ];then
   php scripts/generate_vapid_keys.php
 fi
 
+php scripts/generate_init_files.php
+
