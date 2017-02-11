@@ -91,7 +91,7 @@
 
     enablePushNotification().then(function(){
       push_setting_success();
-    }).catch(function(){
+    }).catch(function(e){
       if ( isNotificationDeniedExplicit() ) {
         push_setting_failed('#msg_error_denied');
       } else {

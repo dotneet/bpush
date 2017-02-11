@@ -119,6 +119,7 @@ owner_account:
 owner_setting:
   site_information: 'Site Information'
   icon: "Icon"
+  badge: "Badge"
   site_icon: 'Site Icon'
   use_notification_list: 'Use notification list'
   use: 'Use'
@@ -135,6 +136,11 @@ owner_setting:
     description: >
       Set an icon displayed in notification.<br/>
       An icon must be png or jpeg format under 100KB.
+  badge_setup:
+    description: >
+      Set an badge displayed in Android notification bar.<br/>
+      A badge must be png file that is monochrome.<br/>
+      On Android devices, the badge should accommodate devices up to 4x resolution, about 96 by 96 px, and the image will be automatically masked. <br/>
   setup:
     paste_code: >
       Paste following code at place you want to displayed a button.

@@ -4,6 +4,7 @@ global['_bpush_env'] = {
   app_key: "{{ app_key }}",
   vapid: {% if constant('USE_VAPID_PROTOCOL') %}true{% else %}false{% endif %},
   vapidPublicKey: new Uint8Array([{{ vapid_public_key }}]),
-  simple_embedded: {% if simple_embedded %}true{% else %}false{% endif %}
+  simple_embedded: {% if simple_embedded %}true{% else %}false{% endif %},
+  debug: {% if debug is defined and debug %}true{% else %}false{% endif %}
 };
 

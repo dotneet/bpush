@@ -121,6 +121,7 @@ owner_account:
 owner_setting:
   site_information: 'サイト情報'
   icon: "アイコン"
+  badge: "バッジ"
   site_icon: 'サイトアイコン'
   use_notification_list: '通知リストの使用'
   use: '使用する'
@@ -137,6 +138,11 @@ owner_setting:
     description: >
       通知に表示されるアイコンを設定できます。<br/>
       100KB以内のJPEGまたはPNG形式の画像を指定してください。
+  badge_setup:
+    description: >
+      Android端末のステータスバーに表示されるアイコンを設定できます。<br/>
+      モノクロのPNG形式の画像を指定してください。<br>
+      画像サイズは96pxが推奨されます。
   setup:
     paste_code: >
       プッシュ通知ボタンを設置したい場所に下記のコードを貼り付けてください。

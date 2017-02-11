@@ -225,6 +225,37 @@ class OwnerController extends ControllerBase
             return $this->redirect('/owner/settings');
         });
 
+        $controllers->post('/owner/site/prepare_badge', function(Request $request) use ($app) {
+            $file_bag = $request->files;
+            $image = $file_bag->get('icon');
+            $path = PUBLIC_ROOT . '/siteicons/';
+            $size = $image->getClientSize();
+            if ( $size > (1024 * 100)) {
+                return new JsonResponse(array('result'=>'failed', 'reason' => 'sizeover'));
+            }
+            $name = uniqid() . uniqid();
+            $ext = $image->guessExtension();
+            $fileName = $name . '.' . $ext;
+            $image->move( $path, $fileName);
+
+            $owner = $app['owner'];
+            $cacheKey = 'prepare_badge/' . $owner->id;
+            $app['redis']->setex($cacheKey, 60*60, $fileName);
+            return new JsonResponse(array(
+                'result' => 'success',
+                'name' => $fileName
+            ));
+        });
+
+        $controllers->get('/owner/site/fix_badge', function(Request $request) use ($app) {
+            $siteId = $request->get('site_id');
+            $owner = $app['owner'];
+            $cacheKey = 'prepare_badge/' . $owner->id;
+            $fileName = $app['redis']->get($cacheKey);
+            $app['repository']->site->updateBadge($siteId, $fileName);
+            return $this->redirect('/owner/settings');
+        });
+
         $controllers->get('/owner/site/delete', function(Request $request) use ($app) {
             $this->checkCsrf($request);
 

@@ -113,13 +113,20 @@ class PushMessage
         }
         $subject = $notification->subject;
         $message = $notification->content;
-        $payload = json_encode([
+        $payloadArray = [
             'id' => $notification->id,
             'subject' => $subject,
             'body' => $message,
             'icon' => $icon,
             'tag' => 'bpush_' . $site->id
-          ]);
+          ];
+        if ( !empty($notification->image_url) ) {
+            $payloadArray['image'] = $notification->image_url;
+        }
+        if ( !empty($site->badge) ) {
+            $payloadArray['badge'] = 'https://' . DOMAIN_NAME . ROOT_PATH . '/siteicons/' . $site->badge;
+        }
+        $payload = json_encode($payloadArray);
         $notifications = array_map(function($s) use($payload) {
             return array(
               'endpoint' => $s->endpoint,

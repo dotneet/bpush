@@ -35,13 +35,15 @@
 {% block js_ready %}
 
 {% if selected_site %}
-  $('#icon_form').submit(function(e) {
+  $('#icon_form,#badge_form').submit(function(e) {
     e.preventDefault();
  
-    var fd = new FormData($(this)[0]);
+    var form = $(this);
+    var fd = new FormData(form[0]);
     fd.append('site_id', {{ selected_site.id }});
  
-    $.ajax('{{ ROOT_PATH }}/owner/site/prepare_icon', {
+    var action_url = form.attr('data-action');
+    $.ajax(action_url, {
       method: "POST",
       processData: false,
       contentType: false,
@@ -49,11 +51,18 @@
       dataType: 'json',
       success: function(json) {
         if ( json.result == 'success' ) {
-          var img = $('<img id="new_icon_image" width="128">').attr('src', '{{ROOT_PATH}}/siteicons/' + json.name );
-          $('#new_icon_image').remove();
-          $('#icon_profile').prepend(img);
-          $('#icon_form').find(':submit').attr('disabled', true);
-          $('#icon_profile').show();
+          form.find(':submit').attr('disabled', true);
+          if ( form.attr('data-type') == 'icon' ) {
+            var img = $('<img id="new_icon_image" width="128">').attr('src', '{{ROOT_PATH}}/siteicons/' + json.name );
+            $('#new_icon_image').remove();
+            $('.icon_profile').prepend(img);
+            $('.icon_profile').show();
+          } else {
+            var img = $('<img id="new_icon_image" width="128">').attr('src', '{{ROOT_PATH}}/siteicons/' + json.name );
+            $('#new_icon_image').remove();
+            $('.badge_profile').prepend(img);
+            $('.badge_profile').show();
+          }
         } else {
           if ( json.reason == 'sizeover' ) {
             alert('{{ 'owner_setting.image_size_too_big' | trans }}');
@@ -68,6 +77,10 @@
 
   $('#new_icon_input').change(function(){
     $('#icon_form').find(':submit').attr('disabled', false);
+  });
+
+  $('#new_badge_input').change(function(){
+    $('#badge_form').find(':submit').attr('disabled', false);
   });
 {% endif %}
 
@@ -176,13 +189,29 @@ $('#edit_scheduled_at').datetimepicker({step: 15});
     <p>
       {{ 'owner_setting.icon_setup.description' | trans | raw }}
     </p>
-    <form id="icon_form" class='update'>
-      <input type="file" id="new_icon_input" name="icon" accept="image/jpeg,image/png" required /><br /><br />
+    <form id="icon_form" class='update' data-type="icon" data-action="{{ ROOT_PATH }}/owner/site/prepare_icon">
+      <input type="file" id="new_icon_input" class="new_image_input" name="icon" accept="image/jpeg,image/png" required /><br /><br />
       <button type="submit" class="btn waves-effect waves-light">{{ 'upload' | trans }}</button>
     </form>
     <br/>
-    <div id="icon_profile" style="display: none;">
+    <div class="icon_profile" style="display: none;">
       <br/><a href="{{ ROOT_PATH }}/owner/site/fix_icon?site_id={{selected_site.id}}" class="btn waves-effect waves-light">{{ 'ok' | trans }}</a>
+    </div>
+  </div>
+</div>
+
+<div id="badge_change_modal" class="modal">
+  <div class="modal-content">
+    <p>
+      {{ 'owner_setting.badge_setup.description' | trans | raw }}
+    </p>
+    <form id="badge_form" class='update' data-type="badge" data-action="{{ ROOT_PATH }}/owner/site/prepare_badge">
+      <input type="file" id="new_badge_input" class="new_image_input" name="icon" accept="image/png" required /><br /><br />
+      <button type="submit" class="btn waves-effect waves-light">{{ 'upload' | trans }}</button>
+    </form>
+    <br/>
+    <div class="badge_profile" style="display: none;">
+      <br/><a href="{{ ROOT_PATH }}/owner/site/fix_badge?site_id={{selected_site.id}}" class="btn waves-effect waves-light">{{ 'ok' | trans }}</a>
     </div>
   </div>
 </div>
@@ -220,6 +249,20 @@ $('#edit_scheduled_at').datetimepicker({step: 15});
           <a class="modal-trigger valign" href="#icon_change_modal">
             {% if selected_site.icon %}
               <img src="{{ ROOT_PATH }}/siteicons/{{ selected_site.icon }}" style="max-width:64px;" />
+            {% else %}
+              <i class="valign material-icons teal-text medium">photo</i>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 m3 l2">
+          <label>{{ 'owner_setting.badge' | trans }}</label>
+        </div>
+        <div class="input-field col s4">
+          <a class="modal-trigger valign" href="#badge_change_modal">
+            {% if selected_site.badge %}
+              <img src="{{ ROOT_PATH }}/siteicons/{{ selected_site.badge }}" style="max-width:64px;" />
             {% else %}
               <i class="valign material-icons teal-text medium">photo</i>
             {% endif %}

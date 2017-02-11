@@ -4,6 +4,7 @@ CREATE TABLE notifications (
   subject varchar(255) NOT NULL,
   content varchar(1024) NOT NULL,
   post_url varchar(1024) NOT NULL,
+  image_url varchar(1024)  CHARACTER SET latin1 NULL,
   scheduled_at TIMESTAMP NULL,
   sent_at TIMESTAMP NULL,
   visible tinyint(1) NOT NULL DEFAULT true,

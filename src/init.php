@@ -13,6 +13,7 @@ use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Logger;
 
 date_default_timezone_set(DEFAULT_TIMEZONE);
 
@@ -39,9 +40,11 @@ if ( !empty($extensions_not_found) ) {
 
 $app = new Silex\Application(isset($dependencies) ? $dependencies : array());
 
-if ( BPUSH_ENVIRONMENT != 'PRODUCTION' ) {
-    $app['debug'] = true;
+function isProduction() {
+    return BPUSH_ENVIRONMENT == 'PRODUCTION';
 }
+
+$app['debug'] = !isProduction();
 
 $app->register(new \Silex\Provider\ServiceControllerServiceProvider());
 
@@ -90,6 +93,7 @@ $app['vapid'] = function() use ($app) {
 
 $app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../logs/app.log',
+    'monolog.level' => isProduction() ? Logger::INFO : Logger::DEBUG,
     'monolog.name' => 'bpush.applog',
     'monolog.formatter' => new LineFormatter(null, null, true)
 )); 

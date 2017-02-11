@@ -70,6 +70,12 @@ class SiteRepository
         return $this->db->executeUpdate($sql, array($fileName, $siteId));
     }
 
+    public function updateBadge($siteId, $fileName)
+    {
+        $sql = 'UPDATE sites SET badge = ? WHERE id = ?';
+        return $this->db->executeUpdate($sql, array($fileName, $siteId));
+    }
+
     public function delete($siteId)
     {
         $sql = 'UPDATE sites SET remove_at = ? WHERE id = ?';

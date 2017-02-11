@@ -5,6 +5,7 @@ CREATE TABLE sites (
   name varchar(255) NOT NULL,
   url varchar(1024) NOT NULL,
   icon varchar(255) NULL,
+  badge varchar(1024)  CHARACTER SET latin1 NULL,
   use_list_page tinyint(4) NOT NULL,
   use_rss tinyint(4) NOT NULL DEFAULT 0,
   remove_at TIMESTAMP NULL,

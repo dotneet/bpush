@@ -29,15 +29,20 @@ self.addEventListener('push', function(evt) {
     // If the notification has a payload show the notification immediately.
     // If you not use VAPID protocol a payload would be empty on Chrome Browser.
 
+    var notificationData = {
+            body: payload.body,
+            tag: payload.tag,
+            icon: payload.icon + '?nid=' + payload.id
+    };
+    if ( typeof(payload.badge) !== 'undefined' && payload.badge ) {
+      notificationData['badge'] = payload.badge;
+    }
+    if ( typeof(payload.image) !== 'undefined' && payload.image ) {
+      notificationData['image'] = payload.image;
+    }
+
     evt.waitUntil(
-      self.registration.showNotification(
-        payload.subject,
-        {
-          body: payload.body,
-          tag: payload.tag,
-          icon: payload.icon + '?nid=' + payload.id 
-        }
-      ).then(function(){
+      self.registration.showNotification(payload.subject, notificationData).then(function(){
         var endpoint = _bpush_env.endpoint_base + '/sapi/v1/count_receive';
         var params = "app_key=" + _bpush_env.app_key + "&nid=" + payload.id;
         return fetch(endpoint + '?' + params).then(function(response) {
@@ -67,7 +72,7 @@ self.addEventListener('push', function(evt) {
                 {
                   body: notification.body,
                   tag: notification.tag,
-                  icon: notification.icon + '?nid=' + notification.id 
+                  icon: notification.icon + '?nid=' + notification.id
                 }
               );
             });
