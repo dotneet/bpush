@@ -24,16 +24,22 @@ class OwnerApiController extends ControllerBase
             $req = json_decode($request->getContent(),true);
 
             if ( !$req ) {
-                return new JsonResponse(["message" => "message format is invalid."], 400);
+                $msg = "message format is invalid.";
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
             $errorField = $this->checkFieldExists($req, ['site_id', 'subject', 'body', 'link_url'] );
             if ( $errorField != null ) {
-                return new JsonResponse(["message" => "$errorField field not found."], 400);
+                $msg = "$errorField field not found.";
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
 
             $site = $app['repository']->site->find($req['site_id']);
             if ( !$site || $site['owner_id'] != $owner->id ) {
-                return new JsonResponse(["message" => "site_id is invalid."], 400);
+                $msg = "site_id is invalid.";
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
 
             if ( !$owner->canSending($site) ) {
@@ -65,16 +71,22 @@ class OwnerApiController extends ControllerBase
             $req = json_decode($request->getContent(),true);
 
             if ( !$req ) {
-                return new JsonResponse(["message" => "message format is invalid."], 400);
+                $msg = "message format is invalid.";
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
             $errorField = $this->checkFieldExists($req, ['site_id', 'subject', 'body', 'link_url', 'tags'] );
             if ( $errorField != null ) {
-                return new JsonResponse(["message" => "$errorField field not found."], 400);
+                $msg = "$errorField field not found.";
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
 
             $site = $app['repository']->site->find($req['site_id']);
             if ( !$site || $site['owner_id'] != $owner->id ) {
-                return new JsonResponse(["message" => "site_id is invalid."], 400);
+                $msg = 'site_id is invalid.';
+                $app['logger']->addWarning($msg);
+                return new JsonResponse(["message" => $msg], 400);
             }
 
             $imageUrl = null;
