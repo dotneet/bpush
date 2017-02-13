@@ -38,6 +38,7 @@ func main() {
     DB: redisConfig["DB"].(int),
     PoolSize: redisConfig["PoolSize"].(int),
   })
+  keyPrefix := redisConfig["KeyPrefix"].(string)
 
   e.GET("/count_receive", func(c echo.Context) error {
     app_key := c.QueryParam("app_key")
@@ -48,7 +49,7 @@ func main() {
       return c.JSON(http.StatusOK, StatusOnlyResponse{Status: "failed"})
     }
 
-    key := NotificationKey + nid
+    key := keyPrefix + NotificationKey + nid
     value,err := client.Incr(key).Result()
     if err != nil {
       fmt.Printf("%d, %s", value, err)

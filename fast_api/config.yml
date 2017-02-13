@@ -2,6 +2,7 @@ Bind: ":8100"
 Redis:
   Addr: "localhost:6379"
   Password: ""
+  KeyPrefix: ""
   DB: 0
   PoolSize: 20
 
