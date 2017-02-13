@@ -8,7 +8,7 @@ var bpush_controller = null;
   function bpush_execute_loading(app_key, onready) {
     var iframe = document.createElement('iframe');
     iframe.setAttribute('id', frame_id);
-    iframe.src = './bpush/loader_' + app_key + '.html';
+    iframe.src = '/bpush/loader_' + app_key + '.html';
     iframe.style.display = 'none';
     iframe.onload = function () {
       if ( onready ) {
