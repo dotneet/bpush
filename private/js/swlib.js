@@ -28,8 +28,8 @@ function isNotificationDeniedExplicit() {
 }
 
 function isSupportPushNotification() {
-  if ( typeof(Promise) === "undefined" || 
-       typeof(Notification) === "undefined" ) {
+  if ( typeof(Promise) === 'undefined' || 
+       typeof(Notification) === 'undefined' ) {
     return false;
   } 
   if ( !('serviceWorker' in navigator) ) {
@@ -40,8 +40,16 @@ function isSupportPushNotification() {
 
 function enablePushNotification() {
   return new Promise(function(resolve, reject) {
+    if ( !isSupportPushNotification() ) {
+      reject('PushNotification is not supporeted.');
+      return;
+    }
+    if ( Notification.permission === 'denied' ) {
+      reject('PushNotification is denied by browser setting.');
+      return;
+    }
     // If service worker is enabled and be allowed by an user do nothing.
-    if ( isServiceWorkerEnabled() && Notification.permission != "default" ) {
+    if ( isServiceWorkerEnabled() && Notification.permission !== 'default' ) {
       resolve();
       return;
     }
@@ -52,8 +60,7 @@ function enablePushNotification() {
     }).then(function(){
       resolve();
     }).catch(function(e){
-      console.log(e);
-      reject();
+      reject(e);
     })
   });
 }
