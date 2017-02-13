@@ -1,0 +1,7 @@
+Bind: ":8100"
+Redis:
+  Addr: "localhost:6379"
+  Password: ""
+  DB: 0
+  PoolSize: 20
+
