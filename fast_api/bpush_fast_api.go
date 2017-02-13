@@ -11,6 +11,8 @@ import (
 )
 
 const NotificationKey = "Notification/IncreaseReceivedCountBuffer/"
+const NotificationSetKey = "Notification/IncreaseBufferSet"
+
 
 type(
   StatusOnlyResponse struct {
@@ -55,8 +57,17 @@ func main() {
       fmt.Printf("%d, %s", value, err)
       return c.JSON(http.StatusOK, StatusOnlyResponse{Status: "failed"})
     }
+
+    key = keyPrefix + NotificationSetKey
+    value,err = client.SAdd(key, nid).Result()
+    if err != nil {
+      fmt.Printf("%d, %s", value, err)
+      return c.JSON(http.StatusOK, StatusOnlyResponse{Status: "failed"})
+    }
+
     return c.JSON(http.StatusOK, StatusOnlyResponse{Status: "success"})
   })
+
   e.Logger.Fatal(e.Start(config["Bind"].(string)))
 }
 
