@@ -1,0 +1,68 @@
+{% extends 'owner_base.twig' %}
+
+{% block page_name %}
+<i class="material-icons">dashboard</i>&nbsp;{{ 'statistics' | trans }}
+{% endblock %}
+
+{% block head_extension %}
+<style>
+tr th {
+  padding: 10px;
+}
+tr td {
+  padding: 5px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% include 'infos.inc.twig' %}
+{% include 'errors.inc.twig' %}
+
+  <h3 style="margin:0;">
+    {{ year }}-{{ month }}
+  </h3>
+  <a href="?year={{ prev_month.format('Y') }}&month={{ prev_month.format('m') }}">&lt;&lt;Prev</a>
+  &nbsp;&nbsp;
+  <a href="?year={{ next_month.format('Y') }}&month={{ next_month.format('m') }}">Next&gt;&gt;</a>
+
+  <div class="row" style="margin: 20px 0 0 0;">
+    <div class="col s3 center-align">{{ 'sending_count' | trans }}</div>
+    <div class="col s3 center-align">{{ 'receive_count' | trans }}</div>
+    <div class="col s3 center-align">{{ 'click_count' | trans }}</div>
+  </div>
+  <div class="row" style="margin: 0;">
+    <div class="col s3 center-align">{{ month_total_sending_count }}</div>
+    <div class="col s3 center-align">{{ month_total_receive_count }}</div>
+    <div class="col s3 center-align">{{ month_total_jump_count }}</div>
+  </div>
+  <div class="row" style="margin:0;">
+  </div>
+
+  <div class="row" style="margin:10px 0;">
+    <div class="col s12">
+      <table class="bordered" style="width:auto;">
+        <colgroup span="1" style="width: 160px;" />
+        <colgroup span="1" style="width: auto; />
+        <colgroup span="1" style="width: auto;" />
+        <colgroup span="1" style="width: auto;" />
+        <tr>
+          <th>{{ 'date' | trans }}</th>
+          <th>{{ 'sending_count' | trans }}</th>
+          <th>{{ 'receive_count' | trans }}</th>
+          <th>{{ 'click_count' | trans }}</th>
+        </tr>
+        {% for stat in stats %}
+          <tr>
+            <td>{{ stat.day }}</td>
+            <td class="number">{{ stat.sending_count }}</td>
+            <td class="number">{{ stat.total_receive_count }}</td>
+            <td class="number">{{ stat.total_jump_count }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

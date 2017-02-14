@@ -103,6 +103,48 @@ class OwnerController extends ControllerBase
                 'errors' => $errors,
             ));
         });
+        
+        $controllers->get('/owner/stats', function(Request $request) use ($app) {
+            $siteId = $this->getSelectedSiteId($request);
+            list($sites, $selectedSite) = $this->getSites($app, $siteId);
+
+            $year = $request->get('year');
+            $month = $request->get('month');
+            if ( $year && $month ) {
+              $time = new \DateTime("$year/$month/01 00:00:00");
+            } else {
+              $time = new \DateTime(date('Y/m/01 00:00:00'));
+            }
+            $startOfMonth = clone $time;
+            $endOfMonth = (clone $time)->modify('last day of this months');
+            
+            $stats = $app['repository']->notification->countByDay($siteId, $startOfMonth, $endOfMonth);
+
+            $monthTotalSendingCount = 0;
+            $monthTotalReceiveCount = 0;
+            $monthTotalJumpCount = 0;
+            foreach ( $stats as $stat ) {
+                $monthTotalSendingCount += $stat['sending_count'];
+                $monthTotalReceiveCount += $stat['total_receive_count'];
+                $monthTotalJumpCount += $stat['total_jump_count'];
+            }
+
+            $nextMonth = (clone $time)->modify('next months');
+            $prevMonth = (clone $time)->modify('previous months');
+
+            return $this->render('owner_stats.twig',array(
+                'sites' => $sites,
+                'selected_site' => $selectedSite,
+                'year' => $startOfMonth->format('Y'),
+                'month' => $startOfMonth->format('m'),
+                'prev_month' => $prevMonth,
+                'next_month' => $nextMonth,
+                'month_total_sending_count' => $monthTotalSendingCount,
+                'month_total_receive_count' => $monthTotalReceiveCount,
+                'month_total_jump_count' => $monthTotalJumpCount,
+                'stats' => $stats
+            ));
+        });
 
         $controllers->get('/owner/settings', function(Request $request) use ($app) {
             $owner = $app['owner'];

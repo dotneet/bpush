@@ -77,6 +77,15 @@ class NotificationRepository
         return $this->db->fetchColumn($sql, array($siteId));
     }
 
+    public function countByDay($siteId, $start, $end) {
+        $sql = 'SELECT DATE_FORMAT(created, "%Y-%m-%d") AS day, COUNT(*) AS sending_count, SUM(received_count) AS total_receive_count, SUM(jump_count) AS total_jump_count ' 
+               . ' FROM notifications '
+               . ' WHERE created BETWEEN ? AND ?'
+               . ' GROUP BY day '
+               . ' ORDER BY day ASC';
+        return $this->db->fetchAll($sql, [$start->format('c'), $end->format('c')]);
+    }
+
     public function create($siteId, $subject, $content, $postUrl, $imageUrl, $scheduledAt, $visible=true)
     {
         $scheduledAt = $scheduledAt ? $scheduledAt : null;

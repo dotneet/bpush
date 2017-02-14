@@ -9,11 +9,13 @@ account_setting: "Account Setting"
 account_info: "Account Information"
 new_registeration: "Register"
 email: "E-Mail"
+date: "Date"
 registered_sites: "Registered Sites"
 generate_token: "Generate Token"
 api_token: "API Token"
 contact: "contact"
 dashboard: "Dashboard"
+statistics: "Statistics"
 push_notification: "Notification"
 notification: 'Notification'
 notification_list: 'Notification List'
@@ -44,8 +46,9 @@ notification_status_failed: "Failed"
 notification_status_scheduled: "Scheduled"
 notification_status_available: "Available"
 unsent: 'Unsent'
+sending_count: 'Sending Count'
 click: 'Click'
-click_count: 'click count'
+click_count: 'Click Count'
 receive: 'Receive'
 receive_count: 'Receive Count'
 created_datetime: 'Created At'

@@ -10,11 +10,13 @@ account_setting: "アカウント設定"
 account_info: "アカウント情報"
 new_registeration: "新規登録"
 email: "メールアドレス"
+date: "日付"
 registered_sites: "登録しているサイト"
 generate_token: "トークンを生成"
 api_token: "APIトークン"
 contact: "問い合わせ"
 dashboard: "ダッシュボード"
+statistics: "統計"
 push_notification: "プッシュ通知"
 notification: '通知'
 notification_list: '通知一覧'
@@ -45,6 +47,7 @@ notification_status_failed: "送信失敗"
 notification_status_scheduled: "送信予約済"
 notification_status_available: "送信可能"
 unsent: '未送信'
+sending_count: '送信回数'
 click: 'クリック'
 click_count: 'クリック数'
 receive: '受信'

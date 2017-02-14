@@ -97,6 +97,12 @@
                 {{ 'push_notification' | trans }}
               </a>
             </li>
+            <li class="bold {% if PAGE_ID=="statistics" %}active{% endif %}">
+              <a class="waves-effect waves-teal" href="{{ROOT_PATH}}/owner/stats">
+                <i class="material-icons">show_chart</i>
+                {{ 'statistics' | trans }}
+              </a>
+            </li>
             <li class="bold valign {% if PAGE_ID=="settings" %}active{% endif %}">
               <a class="waves-effect waves-teal" href="{{ROOT_PATH}}/owner/settings">
                 <i class="material-icons">settings</i>
