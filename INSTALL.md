@@ -34,6 +34,8 @@ Your system must be installed following php extensions for running bpush.
 
 # Google Account
 
+If you use VAPID ignore following process.
+
 ## Google Api Console
 
 Visit Google API Console for setting push notifications.
@@ -49,6 +51,8 @@ Visit Google Cloud Platform and confirm your Project Number displayed beside of 
 URL: https://console.cloud.google.com/
 
 # AWS
+
+If you use VAPID ignore following process.
 
 1. Create AWS Account.
 2. Create an user who can use AWS SNS by AWS IAM(Identity and Access Management).

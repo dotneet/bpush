@@ -34,6 +34,8 @@ bpushはLAMP環境で動作するように設計されています。
 
 # Google
 
+VAPIDを使う場合は下記の手続きは必要ありません。
+
 ## Google Api Console
 
 Google API Consoleよりプッシュ通知APIを使うための準備を行う。
@@ -57,6 +59,8 @@ URL: https://console.cloud.google.com/
  - プロジェクト番号
 
 # AWS
+
+VAPIDを使う場合は下記の手続きは必要ありません。
 
 1. AWSの登録を行いアカウントを入手する
 2. AWS IAM(Identity and Access Management) よりAWS SNSを利用できるユーザーを作成する
