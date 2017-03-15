@@ -23,10 +23,10 @@ class Notifier
             ]));
     }
 
-    public function start()
+    public function start($time = null)
     {
         $lastDbConnecitonTime = time();
-        while ( true ) {
+        while ( $time === null || $time ) {
             $command = $this->redis->blpop(self::COMMAND_QUEUE_KEY, 5);
 
             // for avoiding a connection timeout, reconnect every minutes.
@@ -43,6 +43,7 @@ class Notifier
             if ( !$command or !$command[1] ) {
                 continue;
             }
+            $time = $time - 1;
             $command = json_decode($command[1], true);
             if ( $command ) {
                 $this->executeCommand($command);

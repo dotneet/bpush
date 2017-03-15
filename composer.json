@@ -22,7 +22,8 @@
     "symfony/yaml": "^3.2",
     "symfony/twig-bridge": "^3.2",
     "sinergi/browser-detector": "^6.1",
-    "minishlink/web-push": "^1.3"
+    "minishlink/web-push": "^1.3",
+    "facebook/xhprof": "dev-master"
   },
   "autoload": {
     "psr-4": {

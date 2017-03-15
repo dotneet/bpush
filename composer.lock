@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7de25d4079b123674b35199680c96c21",
+    "content-hash": "15ba12688607cd9f1b1c1240b9063c32",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -610,6 +610,46 @@
                 "parser"
             ],
             "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "facebook/xhprof",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lox/xhprof.git",
+                "reference": "d9bfac3d543e017eff1351d2bd795240d747a079"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lox/xhprof/zipball/d9bfac3d543e017eff1351d2bd795240d747a079",
+                "reference": "d9bfac3d543e017eff1351d2bd795240d747a079",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "bin": [
+                "bin/xhprofile"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "xhprof_lib/utils/xhprof_lib.php",
+                    "xhprof_lib/utils/xhprof_runs.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "XHProf: A Hierarchical Profiler for PHP",
+            "homepage": "http://pecl.php.net/package/xhprof",
+            "keywords": [
+                "performance",
+                "profiling"
+            ],
+            "abandoned": "lox/xhprof",
+            "time": "2015-08-23 09:14:39"
         },
         {
             "name": "fgrosse/phpasn1",
@@ -3235,7 +3275,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fguillot/picofeed": 0
+        "fguillot/picofeed": 0,
+        "facebook/xhprof": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
