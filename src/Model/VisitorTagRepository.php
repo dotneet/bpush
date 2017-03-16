@@ -39,17 +39,4 @@ class VisitorTagRepository
         }
         return $this->find($siteId, $visitorId, $tag);
     }
-
-    public function updateLastModified($siteId, $lastModified)
-    {
-        $sql = 'UPDATE site_rss SET last_modified = ? WHERE site_id = ?';
-        $this->db->executeUpdate($sql, array(strftime('%F %T', $lastModified), $siteId));
-    }
-
-    public function deleteBySiteId($siteId)
-    {
-        $sql = 'DELETE FROM site_rss WHERE site_id = ?';
-        return $this->db->executeUpdate($sql, array($siteId));
-    }
-
 }
