@@ -7,6 +7,15 @@ class Notifier
 
     const COMMAND_SEND_NOTIFICATION = 'send_notification';
 
+    /** @var \Silex\Application */
+    private $app;
+
+    /** @var \Predis\Client */
+    private $redis;
+
+    /** @var \BPush\Model\RepositoryFactory */
+    private $repos;
+
     public function __construct($app)
     {
         $this->app = $app;

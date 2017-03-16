@@ -4,6 +4,9 @@ namespace BPush\Model;
 use PicoFeed\Reader\Reader;
 
 class RSS {
+    /** @var \Silex\Application */
+    private $app;
+
     public function __construct($app)
     {
         if ( !$app ) {

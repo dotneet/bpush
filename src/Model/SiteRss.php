@@ -7,6 +7,9 @@ class SiteRss implements \ArrayAccess
 {
     use DatabaseRecord;
 
+    /** @var \Silex\Application */
+    private $app;
+
     public function __construct($app, array $data)
     {
         $this->app = $app;

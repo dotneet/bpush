@@ -8,6 +8,9 @@ class SiteRssRepository
 
     protected $db;
 
+    /** @var \Silex\Application */
+    private $app;
+
     public function __construct($app)
     {
         $this->app = $app;
