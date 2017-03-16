@@ -5,6 +5,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BasicAuthChecker {
+    /** @var \Silex\Application */
+    private $app;
 
     public function __construct($app)
     {

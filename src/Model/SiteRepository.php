@@ -10,6 +10,12 @@ class SiteRepository
 
     protected $db;
 
+    /** @var \Silex\Application */
+    private $app;
+
+    /** @var \Predis\Client */
+    private $redis;
+
     public function __construct($app)
     {
         $this->app = $app;

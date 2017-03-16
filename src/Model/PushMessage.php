@@ -13,6 +13,9 @@ class PushMessage
     private $app;
     private $sns;
 
+    /** @var \Aws\Sns\SnsClient */
+    private $obj;
+
     public function __construct($app)
     {
         if ( !$app ) {

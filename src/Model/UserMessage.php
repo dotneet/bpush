@@ -10,6 +10,15 @@ class UserMessage
     const TYPE_WARN = 2;
     const TYPE_ERROR = 3;
 
+    /** @var \Silex\Application */
+    private $app;
+
+    /** @var \Predis\Client */
+    private $redis;
+
+    /** @var string */
+    private $ownerId;
+
     public function __construct($app, $userId)
     {
         $this->app = $app;
