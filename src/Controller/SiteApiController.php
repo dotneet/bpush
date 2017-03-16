@@ -47,6 +47,12 @@ class SiteApiController extends ControllerBase
             return $this->renderJsonP(['status'=>'success', 'visitor_id' => $subscription->visitor_id], $callback);
         });
 
+        /**
+         * NOTE:
+         * This api is called by many clients in a short time.
+         * We recommend you to use fastapi.
+         * See details: https://github.com/dotneet/bpush#fastapi
+         */
         $controllers->get('/sapi/v1/count_receive', function(Request $request) use ($app) {
             $appKey = $request->get('app_key');
             $nid = $request->get('nid');
@@ -60,6 +66,10 @@ class SiteApiController extends ControllerBase
             return $this->renderJson(['status'=>'success'], 200, true);
         });
 
+        /**
+         * NOTE:
+         * get_notification is called only if client can't access payload of notification.
+         */
         $controllers->get('/sapi/v1/get_notification', function(Request $request) use ($app) {
             $appKey = $request->get('app_key');
             $nid = $request->get('nid');
