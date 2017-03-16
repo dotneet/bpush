@@ -1,4 +1,7 @@
 {
+  "name": "dotneet/bpush",
+  "description": "The management system of web push notification. It also supports an Non-SSL site.",
+  "license": "MIT",
   "repositories": [
     {
       "type": "pear",
