@@ -26,7 +26,7 @@ bpush supports VAPID that is standard for the web push notification.
 
 ## Installation
 
-See INSTALL.md
+See [INSTALL.md](INSTALL.md)
 
 ## Author
 
