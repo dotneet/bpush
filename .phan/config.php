@@ -7,6 +7,11 @@
  */
 return [
 
+    // A list of files to include in analysis
+    'file_list' => [
+				'config.php'
+    ],
+
     // A list of directories that should be parsed for class and
     // method information. After excluding the directories
     // defined in exclude_analysis_directory_list, the remaining
@@ -16,6 +21,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
+        'lib',
         'vendor/aws/aws-sdk-php/src/',
         'vendor/fguillot/picofeed/lib/PicoFeed/',
         'vendor/minishlink/web-push/src/',
@@ -40,6 +46,7 @@ return [
     //       should be added to both the `directory_list`
     //       and `exclude_analysis_directory_list` arrays.
     "exclude_analysis_directory_list" => [
+        'lib/',
         'vendor/'
     ],
 ];
