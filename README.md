@@ -1,11 +1,11 @@
 # What is bpush
 
-bpush is a web push notification system.
+**bpush** is a web push notification system.
 
 ## Screenshot
 
-<img alt="screenshot1" src="http://i.imgur.com/TJSgZMK.jpg" />
-<img alt="screenshot2" src="http://i.imgur.com/raCcrrO.jpg" />
+![Screenshot: bpush Dashboard](http://i.imgur.com/TJSgZMK.jpg)
+![Screenshot: Register new notification](http://i.imgur.com/raCcrrO.jpg)
 
 ## Support Browsers
 
@@ -18,11 +18,11 @@ bpush supports VAPID that is standard for the web push notification.
 
  - Send a push notification.
  - Scheduled delivery.
- - Support an Non-SSL WebSite(Service-Worker is hosted by bpush host).
+ - Support an Non-SSL WebSite (Service-Worker is hosted by bpush host).
  - Send an notification via Web-API.
  - Manage multiple websites.
- - RSS coordination(deliver rss items as a push notification automatically).
- - Support japanese language.
+ - RSS coordination (deliver rss items as a push notification automatically).
+ - Support Japanese language.
 
 ## Installation
 
@@ -35,4 +35,3 @@ devneko <dotneet@gmail.com>
 ## License
 
 MIT
-
