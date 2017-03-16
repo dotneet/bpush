@@ -16,17 +16,16 @@
     "monolog/monolog": "~1.22",
     "predis/predis": "v1.1.*",
     "pear-pear.php.net/Mail": "1.3.*",
-    "pear-pear.php.net/Net_SMTP": ">=1.7.3",
+    "pear-pear.php.net/Net_SMTP": "^1.7.3",
     "symfony/form": "~2.6",
     "ramsey/uuid": "^3.5.2",
-    "fguillot/picofeed": "@stable",
+    "fguillot/picofeed": "^0.1.31",
     "symfony/translation": "^3.2",
     "symfony/config": "^3.2",
     "symfony/yaml": "^3.2",
     "symfony/twig-bridge": "^3.2",
     "sinergi/browser-detector": "^6.1",
-    "minishlink/web-push": "^1.3",
-    "facebook/xhprof": "dev-master"
+    "minishlink/web-push": "^1.3"
   },
   "autoload": {
     "psr-4": {
