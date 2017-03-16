@@ -1,6 +1,6 @@
 # What is bpush
 
-**bpush** is a web push notification system.
+**bpush** is a management system of web push notification.
 
 ## Screenshot
 
@@ -27,6 +27,12 @@ bpush supports VAPID that is standard for the web push notification.
 ## Installation
 
 See [INSTALL.md](INSTALL.md)
+
+## fastapi
+
+fastapi is an accelerator of receive count api written with golang.
+After you send a push notification, many clients access to your server in a short time.
+fastapi can process many requests faster than api written with PHP.
 
 ## Author
 

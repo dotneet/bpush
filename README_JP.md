@@ -3,6 +3,11 @@
 bpushはウェブでプッシュ通知を送信するためのシステムです。
 複数のサイトを管理することができます。
 
+## スクリーンショット
+
+![Screenshot: bpush Dashboard](http://i.imgur.com/TJSgZMK.jpg)
+![Screenshot: Register new notification](http://i.imgur.com/raCcrrO.jpg)
+
 ## 機能
 
  - プッシュ通知の送信
@@ -14,7 +19,7 @@ bpushはウェブでプッシュ通知を送信するためのシステムです
 
 ## インストール
 
-INSTALL.md を参照してください。
+[INSTALL_JP.md](INSTALL_JP.md)を参照してください
 
 ## 作成者
 
