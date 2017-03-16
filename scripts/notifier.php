@@ -14,7 +14,7 @@ require_once __DIR__ . '/../src/init.php';
 
 $max_execution_count = null;
 
-if (count($argv) > 0 ) {
+if (count($argv) > 1) {
   $max_execution_count = $argv[1];
 }
 
