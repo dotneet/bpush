@@ -34,6 +34,8 @@ fastapi is an accelerator of receive count api written with golang.
 After you send a push notification, many clients access to your server in a short time.
 fastapi can process many requests faster than api written with PHP.
 
+See more details here: [fastapi/README.md](fastapi/README.md)
+
 ## Author
 
 devneko <dotneet@gmail.com>
