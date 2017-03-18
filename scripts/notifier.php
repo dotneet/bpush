@@ -2,7 +2,6 @@
 /**
  * Background process for sending notifications queued by online process.
  */
-xhprof_enable(XHPROF_FLAGS_MEMORY);
 register_shutdown_function(function() {
     echo "Shutdown";
     $data = xhprof_disable();
