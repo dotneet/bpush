@@ -4,8 +4,8 @@
 
 ## Screenshot
 
-![Screenshot: bpush Dashboard](http://i.imgur.com/TJSgZMK.jpg)
-![Screenshot: Register new notification](http://i.imgur.com/raCcrrO.jpg)
+![Screenshot: bpush Statistics](http://i.imgur.com/qQrPPrP.png)
+![Screenshot: Register new notification](http://i.imgur.com/bzNNbIW.png)
 
 ## Support Browsers
 
