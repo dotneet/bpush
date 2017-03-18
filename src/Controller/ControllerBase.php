@@ -76,7 +76,7 @@ class ControllerBase implements ControllerProviderInterface
         $defaultParams = array(
             'ROOT_PATH' => ROOT_PATH,
             'ENVIRONMENT' => BPUSH_ENVIRONMENT,
-            'DOMAIN_NAME' => DOMAIN_NAME,
+            'SERVICE_HOST' => SERVICE_HOST,
             'CSRF_TOKEN' => $csrfToken,
             'PAGE_ID' => $pageId,
         );

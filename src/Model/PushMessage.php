@@ -92,7 +92,7 @@ class PushMessage
         
         $auth = array(
             'VAPID' => array(
-                'subject' => 'https://' . DOMAIN_NAME . ROOT_PATH,
+                'subject' => $site->url,
                 'publicKey' => $this->app['vapid']['public_key_base64'],
                 'privateKey' => $this->app['vapid']['private_key_base64']
             )
@@ -102,17 +102,17 @@ class PushMessage
             $auth['GCM'] = GOOGLE_API_KEY;
         }
 
-				$site_id = $subscriptions[0]['site_id'];
-				$defaultOptions = array(
-						'TTL' => 24*60*60, 			// defaults to 4 weeks
-						'urgency' => 'normal', 	// protocol defaults to "normal"
-						'topic' => 'bpush_site_' . $site_id 					// not defined by default
-				);
+		$site_id = $subscriptions[0]['site_id'];
+		$defaultOptions = array(
+            'TTL' => 24*60*60, 			// defaults to 4 weeks
+            'urgency' => 'normal', 	// protocol defaults to "normal"
+            'topic' => 'bpush_site_' . $site_id 					// not defined by default
+		);
         $webPush = new WebPush($auth, $defaultOptions);
 
-        $icon = 'https://' . DOMAIN_NAME . ROOT_PATH . '/icon_256.png';
+        $icon = SERVICE_HOST . ROOT_PATH . '/icon_256.png';
         if ( $site->icon ) {
-            $icon = 'https://' . DOMAIN_NAME . ROOT_PATH . '/siteicons/' . $site->icon;
+            $icon = SERVICE_HOST . ROOT_PATH . '/siteicons/' . $site->icon;
         }
         $subject = $notification->subject;
         $message = $notification->content;
@@ -127,7 +127,7 @@ class PushMessage
             $payloadArray['image'] = $notification->image_url;
         }
         if ( !empty($site->badge) ) {
-            $payloadArray['badge'] = 'https://' . DOMAIN_NAME . ROOT_PATH . '/siteicons/' . $site->badge;
+            $payloadArray['badge'] = SERVICE_HOST . ROOT_PATH . '/siteicons/' . $site->badge;
         }
         $payload = json_encode($payloadArray);
         $notifications = array_map(function($s) use($payload) {
@@ -144,7 +144,7 @@ class PushMessage
         }
 
         try {
-						// flush() returns true if there were no errors.
+            // flush() returns true if there were no errors.
             $results = $webPush->flush();
             if ( is_array($results) ) {
                 foreach ( $results as $r ) {

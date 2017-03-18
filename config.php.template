@@ -10,8 +10,8 @@ define('DEFAULT_LOCALE', 'en');   // 'en' or 'ja'
 // Use VAPID Protocol. (Firefox support)
 define('USE_VAPID_PROTOCOL', true);
 
-// Your domain name hosted on https. ex. example.com
-define('DOMAIN_NAME', 'example.com');
+// Your domain and protocol. ex. https://example.com
+define('SERVICE_HOST', 'https://example.com');
 // If you host this service in a subdirectory set a path.
 define('ROOT_PATH', '');
 // administrator's mail address.

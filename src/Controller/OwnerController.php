@@ -425,12 +425,12 @@ class OwnerController extends ControllerBase
                 $serviceWorkerJs = $jsGen->generateServiceWorker($site);
 
                 $loaderJs = $this->render('embedded/loader.js.twig', [
-                    'endpoint_base' => 'https://' . DOMAIN_NAME . ROOT_PATH,
+                    'endpoint_base' => SERVICE_HOST . ROOT_PATH,
                     'swlib_url' => '/swlib.js',
                     'app_key' => $site['app_key'],
                 ]);
                 $bpushHtml = $this->render('embedded/bpush.twig', [
-                    'endpoint_base' => 'https://' . DOMAIN_NAME . ROOT_PATH,
+                    'endpoint_base' => SERVICE_HOST . ROOT_PATH,
                     'swlib_url' => '/swlib.js',
                     'app_key' => $site['app_key'],
                     'vapid_public_key' => $app['vapid']['public_key_hex'],

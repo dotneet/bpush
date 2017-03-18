@@ -24,7 +24,7 @@
             <br/>
             <p class="right-align">
               {% if constant('USE_REGISTERATION_THROUGH_WEB') %}
-                <a href="https://{{ DOMAIN_NAME }}{{ ROOT_PATH }}/signup" class="small-text" style="margin: 0 10px;">{{ 'new_registeration' | trans }}</a>
+                <a href="{{ SERVICE_HOST }}{{ ROOT_PATH }}/signup" class="small-text" style="margin: 0 10px;">{{ 'new_registeration' | trans }}</a>
               {% endif %}
               <a href="{{ROOT_PATH}}/auth/request_password_reset"><span class="small-text">{{ 'forgot_password' | trans }}</span></a>
             </p>

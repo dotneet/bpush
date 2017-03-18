@@ -36,7 +36,7 @@ class SiteController extends ControllerBase
                 'site' => $site,
                 'app_key' => $site->app_key,
                 'vapid_public_key' => $app['vapid']['public_key_hex'],
-                'endpoint_base' => 'https://' . DOMAIN_NAME . ROOT_PATH,
+                'endpoint_base' => SERVICE_HOST . ROOT_PATH,
                 'back' => $back,
                 'autoback' => $autoback
             ));
@@ -54,8 +54,8 @@ class SiteController extends ControllerBase
         $controllers->get('/site/{id}/loader', function(Request $request, $id) use ($app) {
             $callback = $request->get('callback');
             $content = $this->render('embedded/loader.js.twig', [
-                'endpoint_base' => 'https://' . DOMAIN_NAME . ROOT_PATH,
-                'swlib_url' => 'https://' . DOMAIN_NAME . ROOT_PATH . '/js/swlib.js',
+                'endpoint_base' => SERVICE_HOST . ROOT_PATH,
+                'swlib_url' => SERVICE_HOST . ROOT_PATH . '/js/swlib.js',
                 'callback' => $callback
             ]);
             return new Response(

@@ -88,9 +88,9 @@ class SiteApiController extends ControllerBase
             $json = null;
             if ( $notification ) {
                 $app['repository']->notification->increaseReceivedCountBuffer($notification->id);
-                $icon = 'https://' . DOMAIN_NAME . ROOT_PATH . '/icon_256.png';
+                $icon = SERVICE_HOST . ROOT_PATH . '/icon_256.png';
                 if ( $site->icon ) {
-                    $icon = 'https://' . DOMAIN_NAME . ROOT_PATH . '/siteicons/' . $site->icon;
+                    $icon = SERVICE_HOST . ROOT_PATH . '/siteicons/' . $site->icon;
                 }
                 $json = [
                     'error' => false,
