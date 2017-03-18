@@ -1,7 +1,6 @@
 package: main
 import:
   - package: github.com/labstack/echo
-  - package: github.com/go-sql-driver/mysql
   - package: gopkg.in/redis.v5
   - package: gopkg.in/yaml.v2
 

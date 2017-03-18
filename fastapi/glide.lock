@@ -1,8 +1,6 @@
-hash: ae2c6ecd0d619b81a2bc0453e2873aa1e66bddd0da6e5517220c65384b21f937
-updated: 2017-02-13T12:59:46.279390234+09:00
+hash: eb46614e6c4877e258b5fce2b58f01754979a8dab4e94df6d925f5c9c821c2e2
+updated: 2017-03-18T20:45:37.073615465+09:00
 imports:
-- name: github.com/go-sql-driver/mysql
-  version: 2e00b5cd70399450106cec6431c2e2ce3cae5034
 - name: github.com/labstack/echo
   version: a8b6864be328fcb5c2d96d32c75b750f84e0e4be
 - name: github.com/labstack/gommon
