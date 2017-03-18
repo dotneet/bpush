@@ -514,7 +514,8 @@ class OwnerController extends ControllerBase
         $sites = ipull($sites, null, 'id');
         $selectedSite = null;
         if ( count($sites) == 1 ) {
-            $selectedSite = array_shift(array_values($sites));
+            $arr = array_values($sites);
+            $selectedSite = array_shift($arr);
         } else if ( count($sites) > 1 ) {
             if ( $siteId && isset($sites[$siteId]) ) {
                 $selectedSite = $sites[$siteId];
