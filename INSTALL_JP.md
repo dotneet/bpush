@@ -2,7 +2,7 @@ bpushはLAMP環境で動作するように設計されています。
 
 # 依存システム
 
- - PHP 5.5 or later
+ - PHP 7.0 or later
  - MySQL 5.5 or later
  - Redis 3.0 or later
  - NodeJS 5.0 or later
