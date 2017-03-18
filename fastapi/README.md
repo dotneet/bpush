@@ -1,13 +1,15 @@
 # fastapi
 
-fastapi is accelerator of receive counting api.
+fastapi is an accelerator of receive counting api written with golang.
+After you send a push notification, many clients access to your server in a short time.
+fastapi can process many requests faster than api written with PHP.
 
 ## How to use
 
 1. Edit config.yml
 
 Change config.yml for your enviroment.
-redis setting must be set to same server as that bpush use.
+Redis setting must be set to same as bpush .
 
 2. Run accelerator.
 
