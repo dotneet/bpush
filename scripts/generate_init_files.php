@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../src/init.php';
 
 $content = $app['twig']->render('init/button.js.twig',array(
-  'DOMAIN_NAME' => DOMAIN_NAME,
+  'SERVICE_HOST' => SERVICE_HOST,
   'ROOT_PATH' => ROOT_PATH
 ));
 if ( file_put_contents(PROJECT_ROOT . '/public/connect/button.js', $content) === false ) {
