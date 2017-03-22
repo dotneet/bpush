@@ -1,6 +1,6 @@
 <?php
 /**
- * add user manually.
+ * add an user manually.
  *
  * this command doesn't require an email confirmation.
  *
@@ -18,9 +18,19 @@ $email = $argv[1];
 $password = $argv[2];
 
 try {
-    $user = $app['repository']->owner->create($email, $password);
-    $app['repository']->owner->confirm($user->id);
+    /** @var \BPush\Model\OwnerRepository $ownerRepository */
+    $ownerRepository = $app['repository']->owner;
+
+    if ( !\BPush\Model\Owner::validateMail($email) ) {
+        throw new Exception('email format is invalid.');
+    }
+    if ( !\BPush\Model\Owner::validatePassword($password) ) {
+        throw new Exception('password format is invalid.');
+    }
+    $user = $ownerRepository->create($email, $password);
+    $ownerRepository->confirm($user->id);
 } catch (\Exception $e) {
+    fputs(STDERR, $e->getMessage() . "\n");
     $app['logger']->addError($e->getMessage());
     exit(1);
 }
