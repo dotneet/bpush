@@ -1,4 +1,4 @@
-# What is bpush
+# What is bpush everything is ok
 
 **bpush** is a management system of web push notification.
 
