@@ -12,7 +12,7 @@
  - Chrome
  - Firefox
 
-bpush supports VAPID that is standard for the web push notification.
+bpush supports VAPID that is standard for the web push notification. And the notification are very usefull for it.
 
 ## Features
 
